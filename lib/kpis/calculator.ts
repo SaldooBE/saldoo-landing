@@ -21,7 +21,9 @@ export function calculateKPIs(normalizedData: NormalizedData): KPIs {
   // Liquiditeit (current ratio): current_assets / current_liabilities
   const liquiditeit =
     balance.current_assets !== null &&
+    balance.current_assets !== undefined &&
     balance.current_liabilities !== null &&
+    balance.current_liabilities !== undefined &&
     balance.current_liabilities > 0
       ? balance.current_assets / balance.current_liabilities
       : null;
@@ -29,7 +31,9 @@ export function calculateKPIs(normalizedData: NormalizedData): KPIs {
   // Solvabiliteit: equity / total_assets * 100
   const solvabiliteit =
     balance.equity !== null &&
+    balance.equity !== undefined &&
     balance.total_assets !== null &&
+    balance.total_assets !== undefined &&
     balance.total_assets > 0
       ? (balance.equity / balance.total_assets) * 100
       : null;

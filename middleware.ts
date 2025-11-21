@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const isLocalhost = hostname.includes('localhost');
   const isVercelPreview = hostname.includes('.vercel.app');
   const isSaldooBe = hostname === 'saldoo.be' || hostname === 'www.saldoo.be';
-  const isAppSaldooBe = hostname === 'app.saldoo.be' || hostname.startsWith('app.saldoo.be');
+  const isAppSaldooBe = hostname === 'app.saldoo.be';
   
   // Platform routes that should only be accessible on app.saldoo.be
   const platformRoutes = [
@@ -29,8 +29,8 @@ export function middleware(request: NextRequest) {
     url.pathname === route || url.pathname.startsWith(route + '/')
   );
   
-  // If accessing saldoo.be (main domain)
-  if (isSaldooBe || (!isAppSaldooBe && !isLocalhost && !isVercelPreview && !isPlatformRoute)) {
+  // Production: saldoo.be (landing page domain)
+  if (isSaldooBe) {
     // Block platform routes - redirect to landing page
     if (isPlatformRoute) {
       return NextResponse.redirect(new URL('/', request.url));
@@ -39,21 +39,29 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // If accessing app.saldoo.be (platform subdomain)
-  if (isAppSaldooBe || (isLocalhost && isPlatformRoute) || (isVercelPreview && isPlatformRoute)) {
-    // Redirect root path to /start (or /login if not authenticated)
+  // Production: app.saldoo.be (platform subdomain)
+  if (isAppSaldooBe) {
+    // Redirect root path to /start
     if (url.pathname === '/') {
-      return NextResponse.redirect(new URL('/start', request.url));
-    }
-    // Block landing page route - redirect to /start
-    if (url.pathname === '/landing' || url.pathname === '/home') {
       return NextResponse.redirect(new URL('/start', request.url));
     }
     // Allow platform routes
     return NextResponse.next();
   }
   
-  // Default: allow the request
+  // Development/Preview: Allow both landing page and platform routes
+  // This allows developers to test both on localhost and Vercel preview URLs
+  if (isLocalhost || isVercelPreview) {
+    // If accessing platform route, allow it
+    if (isPlatformRoute) {
+      return NextResponse.next();
+    }
+    // If accessing root on preview, show landing page (for testing)
+    // Platform routes will work normally
+    return NextResponse.next();
+  }
+  
+  // Default: allow the request (fallback)
   return NextResponse.next();
 }
 
@@ -69,4 +77,5 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico)$).*)',
   ],
 };
+
 

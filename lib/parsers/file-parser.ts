@@ -95,7 +95,7 @@ async function parsePDF(buffer: Buffer): Promise<NormalizedData> {
   let pdfParse;
   try {
     // In Next.js/Turbopack, we need to use dynamic import with specific handling
-    const pdfParseModule = await import('pdf-parse');
+    const pdfParseModule = await import('pdf-parse') as any;
     
     // The module might export differently - check all possibilities
     if (typeof pdfParseModule === 'function') {
@@ -111,7 +111,7 @@ async function parsePDF(buffer: Buffer): Promise<NormalizedData> {
     // If still not found, try accessing the module's exports directly
     if (typeof pdfParse !== 'function') {
       // Check if it's a namespace with a default property
-      const moduleExports = pdfParseModule as any;
+      const moduleExports = pdfParseModule;
       if (moduleExports && typeof moduleExports === 'object') {
         // Try to find any function export
         for (const key in moduleExports) {

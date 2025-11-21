@@ -68,7 +68,7 @@ export default function Home() {
       scale: 1,
       transition: {
         duration: 0.25,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as const,
       },
     },
     exit: {
@@ -76,7 +76,7 @@ export default function Home() {
       scale: 0.98,
       transition: {
         duration: 0.25,
-        ease: [0.4, 0, 0.2, 1],
+        ease: [0.4, 0, 0.2, 1] as const,
       },
     },
   };

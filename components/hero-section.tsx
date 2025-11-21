@@ -49,7 +49,7 @@ export function HeroSection({ onMeerInfoClick }: HeroSectionProps) {
             asChild
             className="h-14 rounded-full bg-gradient-to-b from-[#7AADF0] to-[#4B7FC0] px-8 text-base font-semibold text-white shadow-sm transition-all hover:from-[#6B9EE0] hover:to-[#3C6FB0]"
           >
-            <Link href="/login?signup=true">
+            <Link href="https://app.saldoo.be/login?signup=true">
                Start je analyse hier
             </Link>
           </Button>

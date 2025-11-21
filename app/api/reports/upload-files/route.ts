@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     // Verify report belongs to user
     const { data: report, error: reportError } = await supabase
       .from('reports')
-      .select('id, files_json')
+      .select('id, files_json, status')
       .eq('id', report_id)
       .eq('client_id', user.id)
       .single();

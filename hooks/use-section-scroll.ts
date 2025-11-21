@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 
 interface UseSectionScrollOptions {
   totalSections: number;
-  containerRef: React.RefObject<HTMLElement>;
+  containerRef: React.RefObject<HTMLElement | null>;
   debounceMs?: number;
   swipeThreshold?: number;
   enabled?: boolean;

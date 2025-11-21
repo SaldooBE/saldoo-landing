@@ -1,0 +1,249 @@
+# 📘 Saldoo Mini – Backend Logica voor AI Analyse
+
+Deze uitleg vertelt Cursor stap voor stap **hoe de backend van de upload- en analyseflow moet werken**.  
+De UI en alle vragen zijn al klaar. Cursor moet nu enkel zorgen dat alle antwoorden, geüploade bestanden en resultaten **juist opgeslagen en verwerkt worden** in Supabase, en dat de **AI-agent** nadien het rapport kan genereren en teruggeven aan de ondernemer.
+
+---
+
+## 🔧 Hoofddoel
+
+Wanneer een ondernemer zijn contextvragen heeft ingevuld en zijn documenten (jaarrekening, balans of fiscale aangifte) heeft opgeladen, moet Cursor:
+
+1. Alle antwoorden **opslaan in Supabase**.  
+2. De geüploade bestanden **bewaren in Supabase Storage** met de juiste structuur.  
+3. Zodra alles binnen is, **de analyse uitvoeren via een vaste pipeline**:  
+   - Cijfers uit de bestanden halen (parseren)  
+   - Belangrijke KPI’s berekenen  
+   - De context en cijfers doorgeven aan de AI  
+   - Het uiteindelijke rapport ontvangen en opslaan  
+4. Dat rapport opslaan zodat het nadien **getoond kan worden op de analysepagina** aan de ondernemer.
+
+---
+
+## 🧱 Datamodel in Supabase
+
+Alles draait rond één tabel: **`reports`**.  
+Elke keer een ondernemer een analyse start, wordt er één “report” aangemaakt.  
+Dat rapport bevat niet alleen de antwoorden van de ondernemer, maar ook de resultaten van de AI.
+
+### Belangrijke kolommen in de tabel `reports`
+- `id` → Unieke ID van het rapport  
+- `tenant_id` → ID van het boekhoudkantoor  
+- `client_id` → ID van de ondernemer  
+- `context_json` → Alle antwoorden op de vragenlijst (in JSON)  
+- `files_json` → Lijst met metadata van geüploade bestanden (naam, pad, grootte, type)  
+- `normalized_json` → De gestructureerde cijfers die uit de bestanden gehaald werden  
+- `kpis_json` → Berekening van de kernratio’s  
+- `report_json` → Het eindrapport dat de AI teruggeeft  
+- `status` → Huidige status van het rapport  
+
+De **status** van een rapport verandert in verschillende fases:
+draft → context_completed → uploaded → parsed → generated
+
+yaml
+Copy code
+
+Zo weet het systeem altijd waar de analyse zich bevindt.
+
+De bestanden zelf komen in Supabase Storage, bijvoorbeeld in een mapstructuur zoals:
+reports/{tenantId}/{clientId}/{reportId}/bestand.pdf
+
+yaml
+Copy code
+
+---
+
+## ⚙️ Werking in fases
+
+### 1. Ondernemer vult vragen in
+Wanneer de ondernemer zijn contextvragen invult, hoeft er **geen UI-wijziging** meer te gebeuren.  
+Cursor moet er enkel voor zorgen dat:
+
+- Alle antwoorden automatisch worden **bewaard in Supabase**.  
+- Dit mag in real-time gebeuren (autosave) of bij het drukken op “Opslaan”.  
+- Alle data wordt opgeslaan in `reports.context_json`.  
+
+Wanneer de ondernemer alle vragen heeft ingevuld, mag Cursor **de status aanpassen naar `context_completed`**.
+
+---
+
+### 2. Ondernemer uploadt documenten
+De ondernemer laadt één of meerdere bestanden op (PDF of Excel).  
+Cursor hoeft hier niets visueel aan te passen, enkel:
+
+- De bestanden uploaden naar Supabase Storage in de juiste map.  
+- De metadata (zoals bestandsnaam, grootte en pad) opslaan in `reports.files_json`.  
+- Wanneer minstens één bestand is opgeladen, zet de status naar `uploaded`.
+
+---
+
+### 3. Analyse starten
+Wanneer de ondernemer op “Analyse starten” klikt, begint de eigenlijke logica van Saldoo Mini.
+
+Cursor moet nu automatisch:
+1. De geüploade bestanden downloaden.
+2. De cijfers eruit halen (parseren).
+3. KPI’s berekenen.
+4. De ingevulde context en cijfers samen doorgeven aan de AI.
+5. Het AI-rapport opslaan.
+
+Elke stap wordt hieronder uitgelegd.
+
+---
+
+## 🧮 Stap 1 — Parseren van cijfers
+
+Cursor maakt een parserfunctie die de geüploade bestanden inleest.  
+De parser moet de belangrijkste cijfers herkennen uit jaarrekening, balans of resultatenrekening.  
+
+Voorbeelden van wat eruit gehaald wordt:
+- **Omzet**  
+- **Kosten** (directe en operationele)  
+- **Nettowinst**  
+- **Cashpositie**  
+- **Eigen vermogen**  
+- **Schulden (kort & lang)**  
+
+De parser zet dit alles in een eenvoudig JSON-formaat zoals:
+
+```json
+{
+  "year": 2024,
+  "pnl": {
+    "revenue": 150000,
+    "direct_costs": 45000,
+    "opex": 53000,
+    "net_profit": 52000
+  },
+  "balance": {
+    "cash": 18000,
+    "receivables": 32000,
+    "payables": 12000,
+    "equity": 44000,
+    "total_assets": 110000,
+    "current_liabilities": 35000
+  }
+}
+Dat JSON-bestand wordt opgeslagen in Supabase onder reports.normalized_json.
+
+📊 Stap 2 — KPI’s berekenen
+Vervolgens maakt Cursor een berekening van een paar basisratio’s:
+
+KPI	Betekenis	Formule
+Winstmarge	Hoeveel % van de omzet blijft over als winst	nettowinst / omzet
+Kostenratio	Hoeveel % van de omzet naar kosten gaat	(omzet – winst) / omzet
+Liquiditeit (current ratio)	Kan de zaak haar korte schulden betalen?	vlottende activa / kortlopende schulden
+Solvabiliteit	Hoe sterk is de financiële buffer?	eigen vermogen / totaal activa
+DSO / DPO	Hoe snel klanten betalen en hoe snel leveranciers betaald worden	vorderingen of schulden gedeeld door omzet/kosten
+
+De resultaten worden bewaard in reports.kpis_json.
+
+🧠 Stap 3 — Context voorbereiden voor de AI
+De vragenlijst van de ondernemer is vrij uitgebreid, maar niet alles is nodig voor de AI.
+Cursor maakt dus eerst een compacte context, met enkel de belangrijkste elementen.
+
+Voorbeelden:
+
+Rechtsvorm (eenmanszaak of vennootschap)
+
+Activiteit / sector
+
+Gewenst netto inkomen
+
+Aantal werknemers
+
+Verwachte groei of investeringen
+
+Risico’s of aansprakelijkheden
+
+Deze compacte context wordt samen met de KPI’s en cijfers doorgestuurd naar de AI.
+
+🤖 Stap 4 — Rapport genereren via OpenAI
+Nu komt de AI-agent in actie.
+Cursor stuurt één duidelijke prompt naar OpenAI, met drie onderdelen:
+
+De context van de ondernemer (uit context_json)
+
+De financiële cijfers (uit normalized_json)
+
+De KPI’s (uit kpis_json)
+
+De AI weet dan alles wat nodig is om een rapport te schrijven.
+De instructie is om in het Nederlands te schrijven, op een begrijpbare manier, met alle cijfers cursief (bijvoorbeeld €52.000 winst of 34% winstmarge).
+
+Het rapport bestaat uit cards of secties, bijvoorbeeld:
+
+Kerncijfers
+
+Kostenstructuur
+
+Liquiditeit
+
+Solvabiliteit
+
+Fiscaliteit (enkel als het een eenmanszaak is)
+
+Actiepunten
+
+De AI stuurt zijn antwoord terug als een JSON-object met een duidelijke structuur, bijvoorbeeld:
+
+json
+Copy code
+{
+  "intro": "In dit rapport bespreken we de resultaten van 2024...",
+  "cards": [
+    { "title": "Kerncijfers", "body": ["Uw omzet bedroeg *€150.000*..."] },
+    { "title": "Liquiditeit", "body": ["Uw current ratio is *1,43*..."] }
+  ],
+  "actions": ["Versterk uw cashbuffer", "Overweeg een BV bij stijgende winst"],
+  "disclaimer": "Dit rapport is informatief en geen vervanging van persoonlijk advies."
+}
+Dat resultaat wordt opgeslagen in reports.report_json en de status wordt op generated gezet.
+
+📄 Stap 5 — Rapport tonen aan de ondernemer
+De analysepagina (UI) hoeft niet meer aangepast te worden, Cursor moet enkel:
+
+De juiste data ophalen uit Supabase (report_json, kpis_json, normalized_json).
+
+De inhoud inlezen en tonen.
+
+Eventueel de KPI’s in een zijbalk tonen.
+
+Er mag ook een knop voorzien zijn om de analyse opnieuw te genereren indien nodig.
+
+✅ Wat Cursor concreet moet opleveren
+Backendlogica, niet de UI.
+
+Alle contextantwoorden opslaan in context_json.
+
+Geüploade bestanden bewaren in files_json + Storage.
+
+Analysepipeline bouwen die:
+
+Bestanden uitleest
+
+Cijfers normaliseert
+
+KPI’s berekent
+
+Context + cijfers naar OpenAI stuurt
+
+Rapport ontvangt en opslaat
+
+Het rapport tonen via de bestaande analysepagina.
+
+Status correct beheren (draft → generated).
+
+Foutafhandeling: als iets mislukt, status = error en een korte foutmelding loggen.
+
+🔒 Belangrijk
+Alles moet veilig blijven: enkel de juiste gebruiker mag zijn eigen rapport opslaan of opvragen.
+
+Cursor mag geen data van andere klanten lezen.
+
+Context en rapport mogen niet overschreven worden tenzij het echt de bedoeling is.
+
+De OpenAI-aanvraag moet idempotent zijn (dus niet meerdere keren uitvoeren voor hetzelfde rapport).
+
+📘 Samenvatting
+“Kort gezegd: de frontend staat er al. Cursor moet nu enkel zorgen dat de ingevulde antwoorden en geüploade bestanden netjes in Supabase komen, dat deze gegevens automatisch worden gebruikt in de analysepipeline, en dat de AI het rapport kan schrijven, bewaren en tonen aan de ondernemer. Geen UI-werk meer — enkel de logica en koppeling naar Supabase en OpenAI.”

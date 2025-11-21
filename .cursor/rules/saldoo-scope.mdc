@@ -1,0 +1,224 @@
+---
+alwaysApply: false
+---
+# Saldoo Mini — Build Brief voor Cursor
+
+_Doel: één scherm-flow waarmee een ondernemer jaarcijfers (PDF/Excel) uploadt + korte context invult ⇒ Saldoo genereert automatisch een helder rapport met: (1) kernanalyse van de cijfers, (2) aanbeveling “eenmanszaak vs vennootschap” met onderbouwde uitleg._
+
+---
+
+## 1) Scope & Niet-doelen
+
+**In scope**
+- Upload van **1 boekjaar** (PDF en/of Excel).
+- Bestands­types: jaarrekening, fiscale aangifte, grootboek(uitdraaien), kosten-&-opbrengstenoverzicht.
+- Mini-wizard: **Upload → Context → Voorbeeld/Check → Rapport**.
+- AI-gestuurde **uitleg in begrijpelijke taal** (NL) voor ondernemers zonder boekhoudkennis.
+- **Aanbeveling rechtsvorm**: “blijven als eenmanszaak” of “overstappen naar vennootschap”, incl. argumentatie en gevoeligheidscheck.
+- Downloadbare **PDF-rapport** (max. 6 pagina’s).
+
+**Out of scope (v1)**
+- Realtime API-koppelingen met boekhoudpakketten.
+- Multi-jaarvergelijking.
+- Export van ruwe data.
+- Juridisch/fiscaal maatwerkadvies (we formuleren het als “inschatting/oriëntatie”, geen bindend advies).
+
+---
+
+## 2) User Stories (met acceptatiecriteria)
+
+1. **Als ondernemer** wil ik mijn jaarcijfers uploaden zodat Saldoo ze kan lezen.  
+   - ✅ Ik kan PDF of Excel slepen/uploaden.  
+   - ✅ Na upload zie ik per bestand een status (“gelezen / extra info nodig”).  
+   - ✅ Bij mislukte parsing krijg ik een duidelijke hint (bvb. “tabblad ‘Results’ ontbreekt”).
+
+2. **Als ondernemer** wil ik context invullen (sector, activiteit, aantal VTE, verloningsvoorkeur) zodat de analyse klopt.  
+   - ✅ Minimale velden: sector (selectie), btw-stelsel, aantal FTE/VTE, eigen verloningsdoel (€/m), groeiverwachting (%), investeringsplannen (ja/nee + grootteorde).  
+   - ✅ Validatie en “onduidelijk? klik hier voor uitleg”.
+
+3. **Als ondernemer** wil ik het rapport meteen zien en kunnen downloaden.  
+   - ✅ Rapport toont: samenvatting, 6–8 KPI’s, kostenmix, marges, cash-hint, belastingindicaties (hoog niveau), **rechtsvorm-advies** met redenering + caveats.  
+   - ✅ CTA: “Bespreek met boekhouder” + tips/vragenlijst.
+
+4. **Als ondernemer** wil ik snappen **waarom** de aanbeveling is gemaakt.  
+   - ✅ “Waarom we dit aanraden” sectie met bullets (inkomensniveau, marge-profiel, investeringsplannen, risicospreiding, sociale bijdragen vs vennootschapsbelasting, dividend/bezoldiging-scenario’s).  
+   - ✅ “Wat als…” gevoeligheidsanalyse: +/- 10% omzet en +/- 10% loonkost.
+
+5. **Als product** wil ik **veilig** omgaan met data (GDPR-proof).  
+   - ✅ Duidelijke dataretentie keuze: standaard 30 dagen, met “verwijder nu” knop.  
+   - ✅ Geen data-deling met derden buiten verwerkers.
+
+---
+
+## 3) Flow & Schermen
+
+1) **Start**  
+- Headline: “Upload je jaarcijfers. Krijg helder advies in 5 minuten.”  
+- Korte checklist: “Wat heb je nodig?” (jaarrekening of export, desnoods één van beiden).
+
+2) **Upload**  
+- Dropzone per type: Jaarrekening, Fiscale aangifte, Grootboek/COA, P&L Overzicht.  
+- Statuschips: Geüpload / Optioneel / Ontbreekt.  
+- Tip: “Heb je slechts één bestand? Dat is oké.”
+
+3) **Context**  
+- Sector (drop), BTW-stelsel, VTE, verloningsdoel, groeiverwachting, investeringsplannen.  
+- Info-tooltips met voorbeelden in plain Dutch.
+
+4) **Controleren**  
+- “Zo interpreteren we je data” (samengevatte P&L en balanslight).  
+- Mogelijkheid om **3 labels** te zetten: “Eenmalige kost”, “Private/auto”, “Onzeker”. (Deze beïnvloeden enkel toelichting/kwalitatief deel, niet hard de cijfers in v1.)
+
+5) **Rapport**  
+- Tabs: **Samenvatting** | **Kerncijfers** | **Advies rechtsvorm** | **Volgende stappen**  
+- Knoppen: Download PDF, Deel met boekhouder (e-mail link, enkel rapport).
+
+---
+
+## 4) Databronnen & Normalisatie (praktisch)
+
+- **PDF**: haalbare MVP → AI-extraction met duidelijke fallback (“We konden dit veld niet betrouwbaar lezen”).  
+- **Excel**: verwacht 1 tab met P&L (kolommen: rekening, omschrijving, periode-bedrag).  
+- **Normaliseer** op minimale mapping:  
+  - **Omzet**, **inkopen/inkoopwaarde**, **personeelskost**, **diensten & diverse goederen**, **afschrijvingen**, **financiële kosten**, **belastingen**, **overige**.  
+- **Balans-light** (optioneel maar wenselijk): **activa** (vaste vlottende), **passiva** (eigen vermogen, schulden KT/LT) → enkel voor solvabiliteit/quick ratio.
+
+> Richtlijn: als een label/veld ontbreekt, toon het rapport **zonder** dat onderdeel en leg dat uit. Geen “hard stop”.
+
+---
+
+## 5) Analyse-logica (hoog niveau, parametreerbaar)
+
+**KPI’s**  
+- Brutowinst, brutomarge %, EBITDA, EBITDA-marge %, Nettomarge %, Personeelsratio (personeel/omzet), Kosten per categorie (%), Debiteuren-/Crediteuren-hint indien data beschikbaar.  
+- Liquiditeit (current ratio, quick ratio) en Solvabiliteit (EV/Totaal).
+
+**Belasting/lasten (oriëntatie, geen maatwerk)**  
+- **Eenmanszaak**: schijfgebaseerde personenbelasting + sociale bijdragen op winst (parameters extern in config; geen expliciete cijfers hard-coden).  
+- **Vennootschap**: resultante na vennootschapsbelasting + scenario’s voor **bezoldiging** vs **dividend** (gebruik configurabele veronderstellingen voor sociale lasten/roerende voorheffing; toon als **indicatief**).
+
+**Advies “rechtsvorm”** (heuristisch, transparant)  
+- Besliskader combineert:  
+  - **Inkomensdoel** (nodige netto-opname),  
+  - **Winstniveau & stabiliteit**,  
+  - **Investeringsplannen en afschrijvingsprofiel**,  
+  - **Risico-profiel** (aansprakelijkheid),  
+  - **Personeelskost-intensiteit**,  
+  - **Kasplanning**.  
+- Toon 2–3 korte **scenario’s**:  
+  - Lage opname (meer herinvesteren) → vaak vennootschap gunstiger.  
+  - Hoge opname (cash naar privé) → vaak eenmanszaak blijft competitief tot bepaalde winstniveaus.  
+  - Invest-heavy groei → vennootschap kan voordeliger door afschrijvingen/financiering.  
+- Geef **caveats** (“Bespreek met boekhouder. Regionale vrijstellingen/maatregelen niet meegerekend. Tarieven zijn indicatief.”).
+
+**Gevoeligheidsanalyse**  
+- Herbereken kernuitkomst bij +/-10% omzet en +/-10% loonkost (vier mini-tegelresultaten).
+
+---
+
+## 6) Tone-of-Voice & Uitlegmodule
+
+- Altijd **helder NL**, “jij-vorm”, geen jargon.  
+- Elk cijfer voorzien van **tooltip** (“Wat betekent dit?” + **“Waarom belangrijk?”**).  
+- **Gebruik analoge voorbeelden** (“Elke €100 omzet levert €X brutowinst op; je vaste kosten nemen €Y in.”).
+
+---
+
+## 7) AI-prompts (operationeel, geen code)
+
+**A. Data-extract prompt (PDF/Excel → JSON)**
+- Doel: haal kernrubrieken (zie normalisatie) en bedragen voor 1 boekjaar.  
+- Output: gestructureerd JSON met `pl`, `balance_light`, `notes` (onzekerheden).  
+- Richtlijnen: “wees strikt met velden; markeer ontbrekend i.p.v. te raden”.
+
+**B. Analyse-prompt (JSON → KPI’s)**
+- Input: genormaliseerde cijfers + context.  
+- Taken: bereken KPI’s, detecteer outliers (bv. dienstenkosten > 60% omzet), schrijf **bullet-bevindingen** (max 6) in plain NL.
+
+**C. Rechtsvorm-advies prompt**
+- Input: KPI’s + context + param-config (tarieven).  
+- Taken: simuleer drie scenario’s, kies aanbeveling, motiveer in 5 bullets, formuleer 3 vragen om met de boekhouder te bespreken.
+
+**D. Rapport-samenvatting prompt**
+- Input: alles.  
+- Taken: maak leesbare secties, vermijd dubbele uitleg, max 6 pagina’s bij export.
+
+> Belangrijk: **geen harde fiscale cijfers** in prompts; gebruik **parameters** uit een centrale config (die we makkelijk kunnen updaten).
+
+---
+
+## 8) Validatie & Foutafhandeling
+
+- **Bestandsvalidatie**: afvangen van leeg/versleuteld PDF, vreemde Excel-schemata. Toon “Wat kun je proberen?” (bvb. exporteer P&L naar xlsx).  
+- **Red flags**: als marges of sommen inconsistent zijn, toon waarschuwing en **ga door** met kwalificaties (“Op basis van onvolledige data”).  
+- **Accessibility**: toetsenbord-navigatie, voldoende contrast, duidelijke focusstates.
+
+---
+
+## 9) Rapportstructuur (PDF)
+
+1. **Management summary (1 pagina)**  
+   - 3 bullets “Wat valt op”, 1 bullet **advies rechtsvorm**.  
+2. **Kerncijfers**  
+   - KPI-tegelset, kostenmix-grafiek (donut/bars), marge-evolutie (indien maanden beschikbaar).  
+3. **Rechtsvorm-advies**  
+   - Keuze + waarom, gevoeligheden, caveats.  
+4. **Volgende stappen**  
+   - Checklist gesprek met boekhouder, documentenlijst, quick-wins.
+
+---
+
+## 10) Privacy, Compliance & Transparantie
+
+- Toon **disclaimer**: indicatieve simulatie, geen persoonlijk advies.  
+- **GDPR**: dataretentie 30 dagen, verwijderknop, verwerkersoverzicht (link).  
+- **Transparantie**: “Welke aannames gebruiken we?” sectie in rapport met param-waarden (zonder percentages te hard-coderen in tekst).
+
+---
+
+## 11) Pricing & Checkout (optioneel v1, maar voorbereid)
+
+- Eénmalig **€14,99** per analyse.  
+- Flow: Gratis upload + preview KPIs blurred → paywall → volledig rapport.  
+- Factuur e-mailen met minimale gegevens (naam, btw-nr optioneel).
+
+---
+
+## 12) Testcases (praktisch)
+
+- **Dienstensector solo**: hoge DDG, lage inkopen, lage activa.  
+- **Retail**: hoge inkopen, lagere marge, voorraad in balans-light.  
+- **Scale-up met personeel**: hoge personeelskost, negatieve EBITDA maar groei.  
+- **Freelancer die alles opneemt privé** vs **freelancer die herinvesteert**.  
+- **Incomplete data**: enkel P&L zonder balans.
+
+**Acceptatie voor elk testcase**
+- Rapport rendert zonder crash.  
+- Aanbeveling bevat duidelijke motivatie + caveats.  
+- Gevoeligheidsanalyse zichtbaar.  
+- Downloadbare PDF ≤ 6 pagina’s.
+
+---
+
+## 13) Launch Checklist
+
+- [ ] Upload werkt voor ≥95% van geteste PDF/Excel voorbeelden.  
+- [ ] Heldere lege-staat + fallback copy.  
+- [ ] Param-config voor belastingen/lasten extern en makkelijk wijzigbaar.  
+- [ ] Disclaimer + privacy actief.  
+- [ ] Rapport downloadt als nette PDF.  
+- [ ] Basis analytics: conversie op upload → betaalmuur → download.
+
+---
+
+## 14) Wat Cursor nu moet doen (kort & concreet)
+
+1. De **vier schermen** ontwerpen en invullen (Start, Upload, Context, Rapport) met NL-copy en tooltips.  
+2. Een **extract-→-normalize-→-analyze** pipeline orkestreren (AI-prompts zoals hierboven; strict JSON I/O).  
+3. **Heuristische beslislaag** voor rechtsvorm met scenario’s en gevoeligheidsanalyse (param-gedreven, geen harde tax rates in code).  
+4. **PDF-export** van het rapport (max 6p), inclusief disclaimer en aannames.  
+5. **Robuuste foutafhandeling** & duidelijke hints bij mislukte parsing.  
+6. **Privacy-controls** (retentie, verwijderen, transparantie-sectie).  
+7. (Optioneel) Betaalmuur en kwitantiefactuur genereren.
+
+> Houd het technisch licht, focus op UX, duidelijke taal en uitlegbaarheid. Laat AI **uitleg geven** en **twijfel markeren** in plaats van blokkeren.

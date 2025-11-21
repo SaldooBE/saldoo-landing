@@ -1,0 +1,20 @@
+# Saldoo Mini — Tech Stack Overview
+
+**Frontend**
+- **Next.js (App Router)** → snelle, moderne React-framework voor SSR en API routes.  
+- **Tailwind CSS** → utility-first styling voor consistente spacing, kleuren en responsive design.  
+- **shadcn/ui** → kant-en-klare React componenten (Cards, Buttons, Tabs, Modals) in Saldoo-stijl.  
+- **Framer Motion** → subtiele animaties bij state changes en transitions.  
+
+**Backend**
+- **Supabase** → authenticatie, database (PostgreSQL) en veilige opslag van uploads.  
+- **Edge Functions (Supabase)** → eenvoudige server-side verwerking van bestanden en AI-aanroepen.  
+- **AI-integratie** → OpenAI API voor analyse van cijfers, tekstgeneratie en rapportopmaak.
+
+**Overige**
+- **PDFKit / ReportLab** → genereren van downloadbare rapporten in PDF-formaat.  
+- **Vercel Deployment** → hosting en CI/CD van frontend + edge functions.  
+- **GDPR-conform databeheer** via Supabase policies en beperkte retentie (30 dagen).  
+---
+alwaysApply: true
+---

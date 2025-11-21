@@ -6,10 +6,12 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl.clone();
   
   // Extract domain (handle localhost, vercel preview URLs, and production domains)
-  const isLocalhost = hostname.includes('localhost');
-  const isVercelPreview = hostname.includes('.vercel.app');
-  const isSaldooBe = hostname === 'saldoo.be' || hostname === 'www.saldoo.be';
-  const isAppSaldooBe = hostname === 'app.saldoo.be';
+  // Normalize hostname - remove port if present
+  const normalizedHost = hostname.split(':')[0].toLowerCase();
+  const isLocalhost = normalizedHost.includes('localhost') || normalizedHost === '127.0.0.1';
+  const isVercelPreview = normalizedHost.includes('.vercel.app');
+  const isSaldooBe = normalizedHost === 'saldoo.be' || normalizedHost === 'www.saldoo.be';
+  const isAppSaldooBe = normalizedHost === 'app.saldoo.be';
   
   // Platform routes that should only be accessible on app.saldoo.be
   const platformRoutes = [
@@ -45,7 +47,11 @@ export function middleware(request: NextRequest) {
     if (url.pathname === '/') {
       return NextResponse.redirect(new URL('/start', request.url));
     }
-    // Allow platform routes
+    // Block landing page route if someone tries to access it
+    if (url.pathname === '/landing' || url.pathname === '/home') {
+      return NextResponse.redirect(new URL('/start', request.url));
+    }
+    // Allow all platform routes (including /login, /signup, etc.)
     return NextResponse.next();
   }
   

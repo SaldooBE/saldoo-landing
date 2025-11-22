@@ -38,13 +38,13 @@ const faqItems = [
 
 export function FaqSection() {
   return (
-    <section className="flex min-h-screen w-full flex-col bg-white md:h-screen">
+    <section className="flex min-h-screen w-full flex-col bg-white md:h-screen md:overflow-hidden">
       {/* Header spacer to account for fixed nav */}
       <div className="h-[80px] flex-shrink-0"></div>
 
       {/* FAQ Content */}
-      <div className="flex flex-1 flex-col px-6 pt-6 pb-8 md:px-8 md:pt-8 md:pb-16 lg:px-12 lg:pt-12 lg:pb-20">
-        <div className="mx-auto w-full max-w-2xl">
+      <div className="flex flex-1 flex-col justify-center px-6 pt-4 pb-6 md:px-8 md:pt-4 md:pb-20 lg:px-12 lg:pt-5 lg:pb-24">
+        <div className="mx-auto w-full max-w-2xl md:scale-[0.9] md:origin-center">
           {/* FAQs Button */}
           <div className="mb-4">
             <Button
@@ -56,24 +56,24 @@ export function FaqSection() {
           </div>
 
           {/* Title */}
-          <h2 className="mb-2 text-lg font-bold text-black md:text-xl">
+          <h2 className="mb-1 text-lg font-bold text-black md:text-xl">
             Alles wat je moet weten!
           </h2>
 
           {/* Subtitle */}
-          <p className="mb-2 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
+          <p className="mb-1 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
             Enkele antwoorden op de meest gestelde vragen over ons platform.
           </p>
 
           {/* Contact Text */}
-          <p className="mb-4 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
+          <p className="mb-3 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
             Zie je niet direct hetgeen je zoekt?{" "}
             <span className="font-bold">Neem gerust contact op</span> en we
             helpen je graag verder!
           </p>
 
           {/* Horizontal Divider */}
-          <div className="mb-4 border-t border-gray-300"></div>
+          <div className="mb-3 border-t border-gray-300"></div>
 
           {/* FAQ Accordion */}
           <Accordion type="single" collapsible className="w-full space-y-0">
@@ -83,7 +83,7 @@ export function FaqSection() {
                 value={`item-${index}`}
                 className="border-b border-gray-300 last:border-b-0"
               >
-                <AccordionTrigger className="group py-4 text-left hover:no-underline [&>svg]:text-gray-400 [&>svg]:size-5 [&>svg]:rounded-full [&>svg]:bg-gray-100 [&>svg]:p-1 [&>svg]:transition-transform [&[data-state=open]>svg]:rotate-180">
+                <AccordionTrigger className="group py-3 text-left hover:no-underline [&>svg]:text-gray-400 [&>svg]:size-5 [&>svg]:rounded-full [&>svg]:bg-gray-100 [&>svg]:p-1 [&>svg]:transition-transform [&[data-state=open]>svg]:rotate-180">
                   <div className="flex items-start gap-3 pr-4">
                     <span className="text-gray-400">Q.</span>
                     <span className="flex-1 text-lg font-normal text-black md:text-xl">
@@ -91,7 +91,7 @@ export function FaqSection() {
                     </span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="pb-4 pt-0">
+                <AccordionContent className="pb-3 pt-0">
                   <div className="ml-8 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
                     {item.answer}
                   </div>

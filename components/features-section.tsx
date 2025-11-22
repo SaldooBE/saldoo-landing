@@ -28,15 +28,15 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section className="flex min-h-screen w-full flex-col bg-white md:h-screen">
+    <section className="flex min-h-screen w-full flex-col bg-white md:h-screen md:overflow-hidden">
       {/* Header spacer to account for fixed nav */}
       <div className="h-[80px] flex-shrink-0"></div>
       
       {/* Features Content */}
-      <div className="flex flex-1 flex-col px-6 pt-6 pb-8 md:px-8 md:pt-8 md:pb-16 lg:px-12 lg:pt-12 lg:pb-20">
-        <div className="mx-auto w-full max-w-2xl">
+      <div className="flex flex-1 flex-col justify-center px-6 pt-4 pb-6 md:px-8 md:pt-4 md:pb-20 lg:px-12 lg:pt-5 lg:pb-24">
+        <div className="mx-auto w-full max-w-2xl md:scale-[0.9] md:origin-center">
         {/* Kenmerken Button */}
-        <div className="mb-8">
+        <div className="mb-5">
           <Button
             variant="outline"
             className="h-9 rounded-lg border-0 bg-gray-100 text-[#02377C] hover:bg-gray-200"
@@ -46,12 +46,12 @@ export function FeaturesSection() {
         </div>
 
         {/* Main Text */}
-        <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
+        <p className="mb-5 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
           Saldoo helpt zelfstandigen hun <span className="font-bold">cijfers écht begrijpen</span>.
         </p>
 
         {/* Description Paragraphs */}
-        <div className="mb-8 space-y-4 md:mb-10">
+        <div className="mb-6 space-y-3 md:mb-7 md:space-y-4">
           <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
             Met één eenvoudige upload krijg je een heldere analyse van je resultaten en advies over je fiscale structuur.
           </p>
@@ -61,7 +61,7 @@ export function FeaturesSection() {
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="space-y-6">
+        <div className="space-y-5 md:space-y-6">
           {/* Mobile: All cards in single column */}
           <div className="flex flex-col gap-6 md:hidden">
             {features.map((feature, index) => {

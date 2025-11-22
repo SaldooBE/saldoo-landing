@@ -12,15 +12,15 @@ import {
 
 export function AboutSection() {
   return (
-    <section className="flex min-h-screen w-full flex-col bg-white md:h-screen">
+    <section className="flex min-h-screen w-full flex-col bg-white md:h-screen md:overflow-hidden">
       {/* Header spacer to account for fixed nav */}
       <div className="h-[80px] flex-shrink-0"></div>
       
       {/* About Content */}
-      <div className="flex flex-1 flex-col px-6 pt-6 pb-8 md:px-8 md:pt-8 md:pb-16 lg:px-12 lg:pt-12 lg:pb-20">
-        <div className="mx-auto w-full max-w-2xl">
+      <div className="flex flex-1 flex-col justify-center px-6 pt-4 pb-6 md:px-8 md:pt-4 md:pb-20 lg:px-12 lg:pt-5 lg:pb-24">
+        <div className="mx-auto w-full max-w-2xl md:scale-[0.9] md:origin-center">
           {/* Over ons Button */}
-          <div className="mb-8">
+          <div className="mb-5">
             <Button
               variant="outline"
               className="h-9 rounded-lg border-0 bg-gray-100 text-[#02377C] hover:bg-gray-200"
@@ -30,7 +30,7 @@ export function AboutSection() {
           </div>
 
           {/* Three Description Paragraphs */}
-          <div className="mb-8 space-y-4 md:mb-10">
+          <div className="mb-4 space-y-2 md:mb-5 md:space-y-3">
             <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
               We bouwen een digitale tool die jouw boekhouder niet vervangt, maar <span className="font-bold">versterkt</span>.
             </p>
@@ -43,10 +43,10 @@ export function AboutSection() {
           </div>
 
           {/* Horizontal Divider */}
-          <div className="mb-8 border-t border-gray-300 md:mb-10"></div>
+          <div className="mb-4 border-t border-gray-300 md:mb-5"></div>
 
           {/* Onze visie Section */}
-          <div className="mb-8 flex flex-col gap-4 md:mb-10 md:flex-row md:items-start">
+          <div className="mb-4 flex flex-col gap-4 md:mb-5 md:flex-row md:items-start">
             <h2 className="text-lg font-semibold text-black md:text-xl md:min-w-[120px]">Onze visie</h2>
             <p className="flex-1 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
               Om de kloof tussen cijfers en beslissingen te dichten, zodat ondernemers kunnen groeien met kennis, niet met gokwerk.
@@ -54,7 +54,7 @@ export function AboutSection() {
           </div>
 
           {/* Horizontal Divider */}
-          <div className="mb-8 border-t border-gray-300 md:mb-10"></div>
+          <div className="mb-4 border-t border-gray-300 md:mb-5"></div>
 
           {/* Het team Section */}
           <div className="flex flex-col gap-4 md:flex-row md:items-start">

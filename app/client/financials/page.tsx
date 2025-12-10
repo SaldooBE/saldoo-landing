@@ -26,7 +26,11 @@ export default function ClientFinancialsPage() {
 
   const formatCurrency = (amount: number | null | undefined) => {
     if (amount === null || amount === undefined) return '-'
-    return new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(amount)
+    return new Intl.NumberFormat('nl-BE', { 
+      style: 'currency', 
+      currency: 'EUR', 
+      maximumFractionDigits: 0 
+    }).format(amount)
   }
 
   // Calculate KPIs

@@ -24,8 +24,8 @@ export default function ClientFinancialsPage() {
   const currentFinancials = getClientFinancials(clientId, parseInt(selectedYear))
   const previousFinancials = getPreviousYearFinancials(clientId)
 
-  const formatCurrency = (amount: number | null) => {
-    if (amount === null) return '-'
+  const formatCurrency = (amount: number | null | undefined) => {
+    if (amount === null || amount === undefined) return '-'
     return new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(amount)
   }
 

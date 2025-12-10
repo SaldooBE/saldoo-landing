@@ -48,12 +48,12 @@ export function AuthForm({
     if (initialError) {
       toast.error(decodeURIComponent(initialError))
       // Clean up URL
-      router.replace('/login', { scroll: false })
+      router.replace('/accountant/login', { scroll: false })
     }
     if (initialSuccess) {
       toast.success(decodeURIComponent(initialSuccess))
       // Clean up URL
-      router.replace('/login', { scroll: false })
+      router.replace('/accountant/login', { scroll: false })
     }
   }, [initialError, initialSuccess, router])
 
@@ -117,6 +117,14 @@ export function AuthForm({
     try {
       if (mode === "signup") {
         // Sign up new user
+        const emailRedirectUrl = `${window.location.origin}/auth/callback`
+        
+        // Debug logging for development
+        if (process.env.NODE_ENV === 'development') {
+          console.log('[Auth] Email redirect URL:', emailRedirectUrl)
+          console.log('[Auth] Current origin:', window.location.origin)
+        }
+        
         const { data, error } = await supabase.auth.signUp({
           email: formData.email,
           password: formData.password,
@@ -125,7 +133,7 @@ export function AuthForm({
               first_name: formData.firstName,
               last_name: formData.lastName,
             },
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
+            emailRedirectTo: emailRedirectUrl,
           },
         })
 
@@ -193,10 +201,18 @@ export function AuthForm({
     setOauthLoading(provider)
     
     try {
+      const redirectUrl = `${window.location.origin}/auth/callback?mode=${mode}`
+      
+      // Debug logging for development
+      if (process.env.NODE_ENV === 'development') {
+        console.log('[Auth] OAuth redirect URL:', redirectUrl)
+        console.log('[Auth] Current origin:', window.location.origin)
+      }
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?mode=${mode}`,
+          redirectTo: redirectUrl,
         },
       })
 
@@ -448,7 +464,7 @@ export function AuthForm({
             />
             <div className="relative z-10 text-center px-8">
               <p className="text-xl font-bold text-white drop-shadow-lg">
-                Analyseer je KMO zoals een boekhouder het zou doen.
+                White-label copiloot voor Accountants
               </p>
             </div>
           </div>

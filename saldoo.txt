@@ -1,0 +1,255 @@
+# Saldoo — Platformstructuur & Functionele Overzicht  
+## Final architecture for `/app/accountant/` en `/app/client/`
+
+Dit document beschrijft de definitieve, vereenvoudigde en toekomstbestendige platformstructuur van Saldoo.  
+Alle menu-items komen overeen met de werkelijke kernfunctionaliteiten van het product.  
+Er wordt géén branding-configuratie door het kantoor zelf voorzien — jij beheert branding + subdomeinen centraal.
+
+---
+
+# 1. Accountantomgeving (`/app/accountant/`)
+
+Dit is de professionele cockpit van het boekhoudkantoor.  
+Hier beheert het kantoor al zijn klanten, ziet het AI-triggers, krijgt het inzicht in vragen die leven bij ondernemers en kan het dossiers analyseren op basis van automatisch gesynchroniseerde cijfers.
+
+## Menu-structuur
+
+/app/accountant/
+dashboard
+clients
+analysis
+communication
+settings
+
+
+---
+
+## 1.1 Dashboard
+
+De centrale startpagina voor accountants.
+
+Bevat:
+- Aantal actieve klanten aangesloten
+- Overzicht van top 10 grootste klanten, te filteren op omzet, balanstotaal of winst 
+- Recentste AI-vragen van ondernemers    
+
+
+Doel: de accountant weet in minder dan 10 seconden wat er leeft.
+
+---
+
+## 1.2 Clients (`/app/accountant/clients`)
+
+Beheer van alle klantdossiers.
+
+Bevat:
+
+- Lijst van alle klanten  
+- Zoeken op naam & ondernemingsnummer  
+- Herkenbare status iconen (actief / sync / fout)  
+- Mogelijkheid om nieuwe klanten toe te voegen 
+- Mogelijkheid om een klant te koppelen aan een extern dossier-id (via integratie)  
+- Per klant:  
+  - naam & info  
+  - sync-status  
+  - link naar ondernemersdashboard  
+  - 4 meest recente KPIs (dropdown) 
+
+Eventuele extra functionaliteit:
+- **Client tags** (bijv. “starter”, “consultant”, “horeca”)  
+- **Sectorfilter**  
+- **Risico-/opvolgingsscore** (op basis van trends of AI)
+
+---
+
+## 1.3 Analysis (`/app/accountant/analysis`)
+
+Dit is de analytische cockpit van het kantoor.
+
+Hier krijgt de accountant inzichten die op kantoor-niveau gegroepeerd worden, niet per klant.
+
+Functionaliteiten:
+
+- **AI-signalen**  
+  - welke thema’s leven dit kwartaal? (auto, kosten, vennootschap, btw, investeringen…)  
+  - top 10 meest gestelde vragen door alle klanten 
+  - Overzicht van alle AI-vragen die klanten stelden  
+   - Gesorteerd op:
+   - meest recent  
+   - per klant  
+   - per thema  
+   - per urgentie (AI detecteert onderwerpen zoals “fiscale deadlines”, “grote afwijkingen”, …)  
+
+  - proactieve alerts (bijv. “5 klanten vragen naar vennootschap > upsell opportuniteit”)  
+
+- **Gezondheidsindex per klant**  
+  (optioneel als MVP+ feature)  
+  - score op basis van trends, winst, cash, kostenstructuur  
+  
+
+Dit onderdeel is de grootste *value driver* voor accountants: het maakt trends zichtbaar die anders nooit boven water zouden komen.
+
+---
+
+## 1.4 Communication (`/app/accountant/communication`)
+
+Een vereenvoudigde communicatie-hub, volledig gericht op efficiëntie en proactiviteit.
+
+Functionaliteiten: 
+
+- Fiscale deadlines: Alle fiscale deadlines van Belgie, de accountant kan zelf ook extra kantoor specifieke deadlines toevoegen.
+- Berichten die de accountant kan typen en wordt weergegeven aan de ondernemer  (allemaal of individueel)
+- Veel gestelde vragen: een database van 200+ van de meest gestelde vragen omtrent fiscaliteit en boekhouding, waaraan de
+accountant zelf kan toevoegen of verwijderen. 
+---
+
+## 1.5 Settings (`/app/accountant/settings`)
+
+Kantoorinstellingen.
+
+Bevat:
+
+- Kantoorinformatie  
+- Medewerkersbeheer (rollen: admin, medewerker)  
+- API-integraties (koppelen, ontkoppelen, overzicht van sync logs)  
+- Notificatie-instellingen  
+- Facturatie & abonnement met Saldoo  
+
+**Belangrijk:**  
+Branding wordt hier **niet** beheerd door de accountant. Jij beheert dit centraal in Saldoo Admin.
+
+---
+
+# 2. Klantenomgeving (`/app/client/`)
+
+Dit is het eenvoudige, begrijpbare portaal voor ondernemers.  
+Alle cijfers worden automatisch gesynchroniseerd en in mensentaal weergegeven.
+
+## Menu-structuur
+
+/app/client/
+dashboard
+financials
+analysis
+faq
+communication
+settings
+
+
+---
+
+## 2.1 Dashboard
+
+De eenvoudige, niet-technische startpagina.
+
+Bevat:
+
+- Kerncijfers (omzet, winst, cash, kosten)  
+- Eenvoudige vergelijkingen met vorig jaar  
+- Fiscale deadlines op komst
+- Berichten van de accountant
+
+Het dashboard legt niets technisch uit — alles in mensentaal.
+
+---
+
+## 2.2 Financials (`/app/client/financials`)
+
+Duidelijke weergave van de cijfers.
+
+Bestaat uit:
+
+- Vereenvoudigde balans  
+- Vereenvoudigde resultatenrekening   
+- Grafieken en evoluties  
+- Kostenverdeling (top 5 kosten)  
+- Herkenbare iconografie (auto, materialen, energie, marketing…)  
+- Jaarselectie  
+- Duidingen en standaardtooltips  
+
+Het is ontworpen voor ondernemers die *geen* boekhoudkennis hebben.
+
+---
+
+## 2.3 Analysis (`/app/client/analysis`)
+
+De ondernemer krijgt diepere inzichten in mensentaal.
+
+Bestaat uit:
+Vereenvoudigde balans & resultatenrekening. 
+De ondernemer kan vragen stellen aan AI, die zijn cijfers als context gebruikt.
+Belangrijk! Enkel verduidelijkende vragen, geen concreet advies, aangezien dit de taak is van de accountant. 
+
+---
+
+## 2.4 FAQ (`/app/client/faq`)
+
+Bibliotheek van 200+ eenvoudige uitlegpagina’s. Ik zal deze database  opladen in supabase  en  de accountant heeft  
+het recht om toe te voegen of  te verwijderen.
+
+Bevat:
+- btw (in mensentaal)  
+- auto en kosten  
+- investeringen  
+- sociale bijdragen  
+- vennootschap vs. eenmanszaak  
+- aftrekbaarheid  
+- jaarrekening uitgelegd  
+- vragen over cash, winst, omzet, btw  
+
+De ondernemer kan hier alles vinden zonder het accountantskantoor te moeten bellen.
+
+---
+
+## 2.5 Communication (`/app/client/communication`)
+
+Communicatiemodule tussen klant en accountant.
+
+Functionaliteiten:
+
+- Berichten van kantoor ontvangen
+
+Dit houdt alle communicatie centraal in Saldoo en gekoppeld aan het dossier.
+
+---
+
+## 2.6 Settings (`/app/client/settings`)
+
+Bevat:
+
+- Persoonlijke gegevens  
+- Activiteitsinfo (sector, beschrijving)  
+- Wachtwoordinstellingen  
+- E-mailvoorkeuren  
+
+---
+
+# 3. Aanbevolen Extra Menu-items (optioneel voor later)
+
+## Accountant:
+- `/app/accountant/reports`  
+  Voor snelle PDF-expors of rapportgeneratie.
+
+## Client:
+- `/app/client/documents`  
+  Uploadzone voor documenten (optioneel).
+
+---
+
+# Eindstructuur (samenvatting)
+
+/app/accountant/
+dashboard
+clients
+analysis
+communication
+settings
+
+/app/client/
+dashboard
+financials
+analysis
+faq
+communication
+settings
+

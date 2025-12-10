@@ -32,13 +32,13 @@ export function AboutSection() {
           {/* Three Description Paragraphs */}
           <div className="mb-4 space-y-2 md:mb-5 md:space-y-3">
             <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
-              We bouwen een digitale tool die jouw boekhouder niet vervangt, maar <span className="font-bold">versterkt</span>.
+              We bouwen een digitale tool die jouw boekhoudkantoor niet vervangt, maar versterkt.
             </p>
             <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
-              Een <span className="font-bold">slimme sidekick</span> die antwoorden geeft op de vragen die je normaal niet durft te stellen, zonder dat daar meteen een factuur tegenover staat.
+              Een <span className="font-bold">slimme assistent</span> die ondernemers hun cijfers helder uitlegt en meteen antwoorden geeft op vragen die anders blijven liggen.
             </p>
             <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
-              Laad je cijfers van vorig jaar op, geef kort wat context over je activiteit, en krijg in één klik een <span className="font-bold">heldere analyse</span> zoals je boekhouder het zou uitleggen.
+              Ondernemers krijgen één overzichtelijke plek met hun kerncijfers, een vereenvoudigde balans en resultatenrekening en directe AI-antwoorden. Jullie zien tegelijk welke thema's bij elke klant leven, <span className="font-bold">volledig in jullie eigen branding</span>.
             </p>
           </div>
 

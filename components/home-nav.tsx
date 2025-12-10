@@ -48,7 +48,7 @@ export function HomeNav({ currentSection, onFeaturesClick, onHeroClick }: HomeNa
             variant="outline"
             className="h-12 rounded-full border-gray-300 bg-white px-6 text-sm font-semibold text-gray-700 shadow-sm transition-all hover:bg-gray-50"
           >
-            <Link href="https://app.saldoo.be/login">Inloggen</Link>
+            <Link href="https://app.saldoo.be/accountant/login">Inloggen</Link>
           </Button>
         </div>
       </div>

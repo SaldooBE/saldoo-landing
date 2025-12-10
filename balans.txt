@@ -1,0 +1,309 @@
+# MAR-rekeningstelsel — Balans
+
+## 1 Eigen vermogen, voorzieningen en schulden op meer dan één jaar
+
+### 10 Kapitaal
+- **100** Geplaatst kapitaal  
+- **101** Niet opgevraagd kapitaal (–)
+
+### 11 Inbreng buiten kapitaal
+- **110** Beschikbare inbreng buiten kapitaal (31)  
+  - **1100** Uitgiftepremie  
+  - **1109** Andere  
+- **111** Onbeschikbare inbreng buiten kapitaal  
+  - **1110** Uitgiftepremie  
+  - **1119** Andere  
+
+### 12 Herwaarderingsmeerwaarden
+- **120** Immateriële vaste activa (1)(2)  
+- **121** Materiële vaste activa (2)  
+- **122** Financiële vaste activa (2)  
+- **123** Voorraden (1)  
+- **124** Terugneming waardeverminderingen op geldbeleggingen (3)
+
+### 13 Reserves
+- **130** Wettelijke reserves  
+- **131** Andere onbeschikbare reserves  
+  - **1311** Statutair onbeschikbare reserves  
+  - **1312** Reserve voor eigen aandelen  
+  - **1313** Financiële steunverlening  
+  - **1319** Overige  
+- **132** Belastingvrije reserves  
+- **133** Beschikbare reserves  
+
+### 14 Overgedragen winst of verlies (–)
+
+### 15 Kapitaalsubsidies
+
+### 16 Voorzieningen en uitgestelde belastingen
+- **160** Voorzieningen voor pensioenen en soortgelijke verplichtingen  
+- **161** Voorzieningen voor belastingen  
+- **162** Voorzieningen voor grote herstellings- en onderhoudswerken  
+- **163** Voorzieningen voor milieuverplichtingen  
+- **164–165** Voorzieningen voor overige risico's en kosten (4)  
+- **168** Uitgestelde belastingen  
+  - **1680** Op kapitaalsubsidies  
+  - **1681** Meerwaarden op immateriële vaste activa  
+  - **1682** Meerwaarden op materiële vaste activa  
+  - **1687** Meerwaarden op effecten Belgische publieke sector  
+  - **1688** Buitenlandse uitgestelde belastingen  
+
+### 17 Schulden op meer dan één jaar
+- **170** Achtergestelde leningen  
+  - **1700** Converteerbaar  
+  - **1701** Niet-converteerbaar  
+- **171** Niet-achtergestelde obligatieleningen  
+  - **1710** Converteerbaar  
+  - **1711** Niet-converteerbaar  
+- **172** Leasingschulden en soortgelijke schulden  
+- **173** Kredietinstellingen  
+  - **1730** Schulden op rekening  
+  - **1731** Promessen  
+  - **1732** Acceptkredieten  
+- **174** Overige leningen  
+- **175** Handelsschulden  
+  - **1750** Leveranciers  
+  - **1751** Te betalen wissel  
+- **176** Vooruitbetalingen op bestellingen  
+- **178** Borgtochten ontvangen in contanten  
+- **179** Overige schulden  
+
+### 19 Voorschot aan de vennoten op de verdeling van het netto-actief (–)
+
+---
+
+## 2 Oprichtingskosten, vaste activa en vorderingen op meer dan één jaar
+
+### 20 Oprichtingskosten (5)
+- **200** Oprichtings-, kapitaalverhogings- of inbrengkosten  
+- **201** Kosten bij uitgifte van leningen  
+- **202** Overige oprichtingskosten  
+- **203** [...]  
+- **204** Herstructureringskosten  
+
+### 21 Immateriële vaste activa (6)
+- **210** Onderzoek en ontwikkeling  
+- **211** Concessies, octrooien, licenties, know-how, merken  
+- **212** Goodwill  
+- **213** Vooruitbetalingen  
+
+### 22 Terreinen en gebouwen (6)
+- **220** Terreinen  
+- **221** Gebouwen  
+- **222** Bebouwde terreinen (7)  
+- **223** Overige zakelijke rechten op onroerende goederen  
+
+### 23 Installaties, machines en uitrusting (6)
+
+### 24 Meubilair en rollend materieel (6)
+
+### 25 Vaste activa in leasing of soortgelijk recht (6)
+- **250** Terreinen en gebouwen  
+- **251** Installaties, machines en uitrusting  
+- **252** Meubilair en rollend materieel  
+
+### 26 Overige materiële vaste activa (6)
+
+### 27 Vaste activa in aanbouw en vooruitbetalingen (6)
+
+### 28 Financiële vaste activa
+- **280** Deelnemingen in verbonden ondernemingen  
+  - **2800** Aanschaffingswaarde  
+  - **2801** Nog te storten bedragen (–)  
+  - **2808** Geboekte meerwaarden  
+  - **2809** Geboekte waardeverminderingen (–)  
+- **281** Vorderingen op verbonden ondernemingen  
+  - **2810** Vorderingen op rekening  
+  - **2811** Te innen wissels  
+  - **2812** Vastrentende effecten  
+  - **2817** Dubieuze debiteuren  
+  - **2819** Geboekte waardeverminderingen (–)  
+- **282** Deelnemingen in ondernemingen met deelnemingsverhouding  
+  - **2820** Aanschaffingswaarde  
+  - **2821** Nog te storten bedragen (–)  
+  - **2828** Geboekte meerwaarden  
+  - **2829** Geboekte waardeverminderingen (–)  
+- **283** Vorderingen op ondernemingen met deelnemingsverhouding  
+  - **2830** Vorderingen op rekening  
+  - **2831** Te innen wissels  
+  - **2832** Vastrentende effecten  
+  - **2837** Dubieuze debiteuren  
+  - **2839** Geboekte waardeverminderingen (–)  
+- **284** Andere aandelen  
+  - **2840** Aanschaffingswaarde  
+  - **2841** Nog te storten bedragen (–)  
+  - **2848** Geboekte meerwaarden  
+  - **2849** Geboekte waardeverminderingen (–)  
+- **285** Overige vorderingen  
+  - **2850** Vorderingen op rekening  
+  - **2851** Te innen wissels  
+  - **2852** Vastrentende effecten  
+  - **2857** Dubieuze debiteuren  
+  - **2859** Geboekte waardeverminderingen (–)  
+- **288** Borgtochten betaald in contanten  
+
+### 29 Vorderingen op meer dan één jaar
+- **290** Handelsvorderingen  
+  - **2900** Handelsdebiteuren  
+  - **2901** Te innen wissels  
+  - **2906** Vooruitbetalingen (8)  
+  - **2907** Dubieuze debiteuren  
+  - **2909** Geboekte waardeverminderingen (–)  
+- **291** Overige vorderingen  
+  - **2910** Vorderingen op rekening  
+  - **2911** Te innen wissels  
+  - **2917** Dubieuze debiteuren  
+  - **2919** Geboekte waardeverminderingen (–)  
+
+---
+
+## 3 Voorraden en bestellingen in uitvoering
+
+### 30 Grondstoffen (9)
+- **300** Aanschaffingswaarde (10)  
+- **309** Geboekte waardeverminderingen (–) (11)
+
+### 31 Hulpstoffen (9)
+- **310** Aanschaffingswaarde (10)  
+- **319** Geboekte waardeverminderingen (–) (11)
+
+### 32 Goederen in bewerking (9)
+- **320** Aanschaffingswaarde (10)  
+- **329** Geboekte waardeverminderingen (–) (11)
+
+### 33 Gereed product (9)
+- **330** Aanschaffingswaarde (10)  
+- **339** Geboekte waardeverminderingen (–) (11)
+
+### 34 Handelsgoederen (9)
+- **340** Aanschaffingswaarde (10)  
+- **349** Geboekte waardeverminderingen (–) (11)
+
+### 35 Onroerende goederen bestemd voor verkoop (9)
+- **350** Aanschaffingswaarde (10)  
+- **359** Geboekte waardeverminderingen (–) (11)
+
+### 36 Vooruitbetalingen op voorraadinkopen
+- **360** Vooruitbetalingen  
+- **369** Geboekte waardeverminderingen (–) (11)
+
+### 37 Bestellingen in uitvoering (12)
+- **370** Aanschaffingswaarde  
+- **371** Toegerekende winst  
+- **379** Geboekte waardeverminderingen (–) (11)
+
+---
+
+## 4 Vorderingen en schulden op ten hoogste één jaar
+
+### 40 Handelsvorderingen (13)
+- **400** Handelsdebiteuren  
+- **401** Te innen wissels  
+- **404** Te innen opbrengsten (15)  
+- **406** Vooruitbetalingen (8)  
+- **407** Dubieuze debiteuren  
+- **409** Geboekte waardeverminderingen (–)
+
+### 41 Overige vorderingen (13)
+- **410** Opgevraagd niet gestort kapitaal/inbreng  
+- **411** Terug te vorderen btw  
+- **412** Terug te vorderen belastingen en voorheffingen  
+  - **4120–4124** Belgische winstbelastingen  
+  - **4125–4127** Andere Belgische belastingen  
+  - **4128** Buitenlandse belastingen  
+- **414** Te innen opbrengsten  
+- **416** Diverse vorderingen  
+- **417** Dubieuze debiteuren  
+- **418** Borgtochten betaald in contanten  
+- **419** Geboekte waardeverminderingen (–)
+
+### 42 Schulden op meer dan één jaar die binnen het jaar vervallen  
+*(zelfde onderverdeling als rubriek 17)*
+
+### 43 Financiële schulden
+- **430** Kredietinstellingen — leningen op rekening met vaste termijn  
+- **431** Promessen  
+- **432** Acceptkredieten  
+- **433** Schulden in rekening-courant (17)  
+- **439** Overige leningen  
+
+### 44 Handelsschulden
+- **440** Leveranciers  
+- **441** Te betalen wissels  
+- **444** Te ontvangen facturen (19)
+
+### 45 Belastingen, bezoldigingen en sociale lasten
+- **450** Geraamde belastingschulden  
+  - **4500–4504** Belgische winstbelastingen  
+  - **4505–4507** Andere Belgische belastingen  
+  - **4508** Buitenlandse belastingen  
+- **451** Te betalen btw  
+- **452** Te betalen belastingen en taksen  
+  - **4520–4524** Belgische winstbelastingen  
+  - **4525–4527** Andere Belgische belastingen  
+  - **4528** Buitenlandse belastingen  
+- **453** Ingehouden voorheffingen  
+- **454** RSZ  
+- **455** Bezoldigingen  
+- **456** Vakantiegeld  
+- **459** Andere sociale schulden  
+
+### 46 Vooruitbetalingen op bestellingen
+
+### 47 Schulden uit de bestemming van het resultaat
+- **470** Dividenden en tantièmes vorige boekjaren  
+- **471** Dividenden boekjaar  
+- **472** Tantièmes boekjaar  
+- **473** Andere rechthebbenden  
+
+### 48 Diverse schulden
+- **480** Vervallen obligaties en coupons  
+- **488** Borgtochten ontvangen in contanten  
+- **489** Andere diverse schulden  
+
+### 49 Overlopende rekeningen
+- **490** Over te dragen kosten  
+- **491** Verkregen opbrengsten  
+- **492** Toe te rekenen kosten  
+- **493** Over te dragen opbrengsten  
+- **499** Wachtrekeningen  
+
+---
+
+## 5 Geldbeleggingen en liquide middelen
+
+### 50 Eigen aandelen
+
+### 51 Aandelen en geldbeleggingen (niet-vastrentend)
+- **510** Aanschaffingswaarde  
+  - **5100** Aandelen  
+  - **5101** Geldbeleggingen andere dan vastrentende  
+- **511** Niet-opgevraagde bedragen (–)  
+  - **5110** Aandelen  
+- **519** Waardeverminderingen (–) (11)  
+  - **5190** Aandelen  
+  - **5191** Overige beleggingen  
+
+### 52 Vastrentende effecten
+- **520** Aanschaffingswaarde  
+- **529** Waardeverminderingen (–) (11)
+
+### 53 Termijndeposito’s
+- **530** > 1 jaar  
+- **531** > 1 maand — ≤ 1 jaar  
+- **532** ≤ 1 maand  
+- **539** Waardeverminderingen (–) (11)
+
+### 54 Te incasseren vervallen waarden (20)
+
+### 55 Kredietinstellingen (21)
+- **550–559** Rekeningnummers  
+  - **...0** Rekening-courant  
+  - **...1** Uitgeschreven cheques (–) (22)  
+  - **...9** Waardeverminderingen (–) (11)
+
+### 57 Kassen
+- **570–577** Kassen-contanten  
+- **578** Kassen-zegels  
+
+### 58 Interne overboekingen

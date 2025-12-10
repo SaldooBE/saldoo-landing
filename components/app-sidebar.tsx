@@ -4,10 +4,13 @@ import * as React from "react"
 import { usePathname } from "next/navigation"
 import Image from "next/image"
 import {
-  Upload,
-  BarChart3,
-  HelpCircle,
   Home,
+  Users,
+  BarChart3,
+  MessageSquare,
+  Settings,
+  TrendingUp,
+  HelpCircle,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -31,33 +34,86 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   
   const supabase = React.useMemo(() => createClient(), [])
 
-  // Define navigation items with dynamic active state
-  const navMain = [
+  // Determine if we're in accountant or client context based on pathname
+  const isAccountantRoute = pathname?.startsWith("/accountant/")
+  const isClientRoute = pathname?.startsWith("/client/")
+
+  // Define accountant navigation items (Dutch labels)
+  const accountantNavItems = [
     {
-      title: "Start hier",
-      url: "/start",
+      title: "Dashboard",
+      url: "/accountant/dashboard",
       icon: Home,
-      isActive: pathname === "/start",
+      isActive: pathname === "/accountant/dashboard",
     },
     {
-      title: "Upload & context",
-      url: "/upload",
-      icon: Upload,
-      isActive: pathname === "/upload",
+      title: "Clients",
+      url: "/accountant/clients",
+      icon: Users,
+      isActive: pathname === "/accountant/clients",
     },
     {
-      title: "Analyse & rapport",
-      url: "/analyse",
+      title: "Analyse",
+      url: "/accountant/analysis",
       icon: BarChart3,
-      isActive: pathname === "/analyse",
+      isActive: pathname === "/accountant/analysis",
     },
     {
-      title: "Veelgestelde vragen/uitleg",
-      url: "/faq",
-      icon: HelpCircle,
-      isActive: pathname === "/faq",
+      title: "Communicatie",
+      url: "/accountant/communication",
+      icon: MessageSquare,
+      isActive: pathname === "/accountant/communication",
+    },
+    {
+      title: "Instellingen",
+      url: "/accountant/settings",
+      icon: Settings,
+      isActive: pathname === "/accountant/settings",
     },
   ]
+
+  // Define client navigation items (Dutch labels)
+  const clientNavItems = [
+    {
+      title: "Dashboard",
+      url: "/client/dashboard",
+      icon: Home,
+      isActive: pathname === "/client/dashboard",
+    },
+    {
+      title: "Mijn boekhouding",
+      url: "/client/financials",
+      icon: TrendingUp,
+      isActive: pathname === "/client/financials",
+    },
+    {
+      title: "AI Analyse",
+      url: "/client/analysis",
+      icon: BarChart3,
+      isActive: pathname === "/client/analysis",
+    },
+    {
+      title: "Veelgestelde vragen",
+      url: "/client/faq",
+      icon: HelpCircle,
+      isActive: pathname === "/client/faq",
+    },
+    {
+      title: "Communicatie",
+      url: "/client/communication",
+      icon: MessageSquare,
+      isActive: pathname === "/client/communication",
+    },
+    {
+      title: "Instellingen",
+      url: "/client/settings",
+      icon: Settings,
+      isActive: pathname === "/client/settings",
+    },
+  ]
+
+  // Select appropriate navigation items based on route context
+  const navMain = isAccountantRoute ? accountantNavItems : isClientRoute ? clientNavItems : []
 
   // Fetch user data on mount and when pathname changes
   React.useEffect(() => {

@@ -27,21 +27,21 @@ export function HeroSection({ onMeerInfoClick }: HeroSectionProps) {
             className="h-9 flex-shrink-0 rounded-lg border-0 bg-[#E8EFF5] text-[#02377C] hover:bg-[#D0E0EB] flex items-center gap-2"
           >
             <Bell className="h-4 w-4" />
-            <span>Nieuw!</span>
+            <span>Nieuw</span>
           </Button>
           <p className="text-sm font-semibold text-[#191919] md:text-base">
-            Voor startende ondernemers.
+            Voor boekhoudkantoren!
           </p>
         </div>
 
         {/* Main Headline */}
         <h1 className="mb-4 text-4xl font-bold leading-[1.1] tracking-tight text-[#191919] md:mb-5 md:text-5xl md:leading-[1.1] lg:text-[3.25rem] lg:leading-[1.1]">
-          Analyseer je KMO zoals een boekhouder het <span className="whitespace-nowrap">zou doen</span>.
+          White-label copiloot voor Accountants.
         </h1>
 
         {/* Subtext */}
         <p className="mb-6 text-lg leading-relaxed text-gray-600 md:mb-7 md:text-xl md:leading-relaxed">
-          Upload je cijfers van vorig jaar en krijg meteen een analyse én persoonlijk advies of je beter overschakelt naar een vennootschap.
+        Maak financiële cijfers begrijpelijk voor elke klant en ontdek welke vragen écht spelen. Volledig in de look & feel van jouw kantoor.
         </p>
 
         {/* CTA Buttons */}
@@ -50,8 +50,8 @@ export function HeroSection({ onMeerInfoClick }: HeroSectionProps) {
             asChild
             className="h-14 rounded-full bg-gradient-to-b from-[#7AADF0] to-[#4B7FC0] px-8 text-base font-semibold text-white shadow-sm transition-all hover:from-[#6B9EE0] hover:to-[#3C6FB0]"
           >
-            <Link href="https://app.saldoo.be/login?signup=true">
-               Start je analyse hier
+            <Link href="https://app.saldoo.be/accountant/login">
+               Start vandaag
             </Link>
           </Button>
           <Button

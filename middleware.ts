@@ -15,13 +15,8 @@ export function middleware(request: NextRequest) {
   
   // Platform routes that should only be accessible on app.saldoo.be
   const platformRoutes = [
-    '/start',
-    '/upload',
-    '/analyse',
-    '/dashboard',
-    '/facturatie',
-    '/login',
-    '/signup',
+    '/accountant',
+    '/client',
     '/api',
     '/auth',
   ];
@@ -43,15 +38,15 @@ export function middleware(request: NextRequest) {
   
   // Production: app.saldoo.be (platform subdomain)
   if (isAppSaldooBe) {
-    // Redirect root path to /start
+    // Redirect root path to login (user will be redirected to appropriate dashboard after login)
     if (url.pathname === '/') {
-      return NextResponse.redirect(new URL('/start', request.url));
+      return NextResponse.redirect(new URL('/accountant/login', request.url));
     }
     // Block landing page route if someone tries to access it
     if (url.pathname === '/landing' || url.pathname === '/home') {
-      return NextResponse.redirect(new URL('/start', request.url));
+      return NextResponse.redirect(new URL('/accountant/login', request.url));
     }
-    // Allow all platform routes (including /login, /signup, etc.)
+    // Allow all platform routes (including /accountant/*, /client/*, /login, /signup, etc.)
     return NextResponse.next();
   }
   

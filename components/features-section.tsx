@@ -47,16 +47,16 @@ export function FeaturesSection() {
 
         {/* Main Text */}
         <p className="mb-5 text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
-          Saldoo helpt zelfstandigen hun <span className="font-bold">cijfers écht begrijpen</span>.
+          Saldoo helpt accountants hun klanten <span className="font-bold">duidelijker en proactiever begeleiden</span>.
         </p>
 
         {/* Description Paragraphs */}
         <div className="mb-6 space-y-3 md:mb-7 md:space-y-4">
           <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
-            Met één eenvoudige upload krijg je een heldere analyse van je resultaten en advies over je fiscale structuur.
+          Eén omgeving waar ondernemers hun cijfers begrijpen en vragen kunnen stellen via AI. Jullie kantoor krijgt inzicht in wat er precies bij klanten speelt.
           </p>
           <p className="text-lg leading-relaxed text-gray-600 md:text-xl md:leading-relaxed">
-            <span className="font-bold">Geen vakjargon, geen overbodige grafieken</span>, gewoon inzicht in hoe je onderneming het doet en waar je financieel sterker kunt staan.
+            <span className="font-bold">Geen technisch jargon en geen extra werk</span>. Wel een branded portaal dat ondernemers geruststelt, tijd bespaart en jullie adviesrol versterkt.
           </p>
         </div>
 

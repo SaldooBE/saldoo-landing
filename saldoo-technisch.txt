@@ -1,0 +1,171 @@
+# Saldoo voor Accountants
+
+Saldoo voor accountants is een whitelabel, multi-tenant SaaS-platform bovenop Next.js en Supabase. Het doel is om boekhoudkantoren één centrale omgeving te geven waarin zij al hun klanten, cijfers en communicatie beheren, terwijl ondernemers via een apart portaal hun cijfers begrijpen, trends zien en vragen kunnen stellen aan een AI-laag die gebouwd is op hun eigen data.
+
+In deze versie gaan we er expliciet van uit dat Saldoo **niet werkt met manuele uploads als standaard**, maar met **rechtstreekse API-integraties met boekhoudsoftware**. De accountant koppelt één keer zijn boekhoudpakket(ten) aan Saldoo, en per klantdossier wordt een automatische koppeling gelegd met het juiste dossier in de bronsoftware. Cijfers worden vervolgens gesynchroniseerd via API-calls, webhooks of periodieke sync-jobs.
+
+Het platform vervangt de bestaande boekhoudsoftware niet. Het is een extra laag die:
+- cijfers begrijpelijk maakt voor ondernemers,
+- inzicht geeft in de vragen die bij klanten leven,
+- en de uitstraling van het kantoor versterkt via whitelabel branding.
+
+## Architectuur en multi-tenant model
+
+Saldoo draait op een multi-tenant architectuur. Elk kantoor krijgt een eigen subdomein, bijvoorbeeld `kantoornaam.saldoo.app`. Dit subdomein bepaalt de tenant (`firm_id`) en laadt de juiste branding, gebruikers en klantdossiers. De backend draait op Supabase (PostgreSQL + Auth + Storage), met row-level security om alle data strikt per kantoor en per klant te isoleren.
+
+De belangrijkste concepten aan de backend-kant zijn:
+- een firm (het kantoor),
+- clients (de klanten/dossiers),
+- connections (API-koppelingen met externe boekhoudsoftware),
+- financial_data (genormaliseerde cijfers in Saldoo-formaat),
+- ai_questions (vragen die ondernemers stellen aan de AI),
+- en diverse tabellen voor userbeheer, branding en logging.
+
+Elke request wordt in Next.js automatisch gescoord op basis van het subdomein. Bij elke database-query wordt `firm_id` verplicht meegegeven zodat de row-level security in Supabase goed kan werken.
+
+## Directe API-integraties met boekhoudsoftware
+
+In plaats van manuele uploads van PDF, Excel of CSV vertrekt Saldoo vanuit het principe dat elk kantoor zijn bestaande boekhoudsoftware rechtstreeks koppelt via API. De accountant hoeft per klant geen bestanden meer te exporteren en opladen; hij koppelt één keer het boekhoudpakket, en vervolgens worden per klant de juiste dossiers geselecteerd of gemapt.
+
+De integraties kunnen zowel OAuth2-gebaseerd zijn (zoals veel cloud-boekhoudpakketten) als API-key-gebaseerd, afhankelijk van de leverancier. Saldoo beheert de autorisatiegegevens per kantoor in een tabel zoals `external_connections`, waarin wordt bijgehouden:
+- tot welk boekhoudplatform de koppeling behoort,
+- welke scope er is toegekend (leesrechten op cijfers),
+- tokens (access + refresh) of API-keys,
+- metadata zoals tenant-id of firm-code in het externe systeem.
+
+Voor elk clientdossier wordt in een tabel zoals `client_connections` vastgelegd aan welk extern dossier-id in de boekhoudsoftware dit dossier gekoppeld is. Dit betekent concreet dat Saldoo per klant weet welke API-calls nodig zijn om de cijfers op te halen, zoals “haal de interne jaarrekening van dossier X op”.
+
+De synchronisatie kan op drie manieren gebeuren:
+- een initiële volledige sync bij het koppelen van een klantdossier,
+- periodieke sync-jobs (bijvoorbeeld dagelijks of elk uur),
+- event-driven sync via webhooks van de boekhoudsoftware wanneer er nieuwe cijfers of boekjaren beschikbaar zijn.
+
+De sync-logica wordt geïmplementeerd in server-side Next.js API-routes of scheduled jobs (bijvoorbeeld via cron, edge functions of een externe job-runner). Elke sync-run haalt ruwe data op uit de bron (rekeningnummers, saldi, periodes), schrijft deze weg in een `raw_import`-tabel, en zet ze daarna om naar het Saldoo-datamodel in `financial_data`.
+
+## Normalisatie en mapping van brondata
+
+Omdat elk boekhoudpakket eigen structuren en rekeningstelsels heeft, moet Saldoo een consistente normalisatielaag hebben. De ruwe data die via de API binnenkomen, worden eerst één op één opgeslagen (rekeningcode, label, saldo, periode, boekjaar). Daarna wordt een mapping uitgevoerd naar interne Saldoo-categorieën, zoals:
+- omzet,
+- operationele kosten,
+- personeelskosten,
+- auto en mobiliteit,
+- investeringen,
+- schulden op korte en lange termijn,
+- eigen vermogen,
+- cash en liquide middelen.
+
+Deze mapping gebeurt op basis van:
+- rekeningcodes (bijvoorbeeld via Belgische standaarden of interne mappingtabellen),
+- rekeningomschrijving,
+- en eventueel manuele overrides die een kantoor per klant kan instellen.
+
+Het resultaat is een genormaliseerd financieel profiel per klant en per boekjaar dat Saldoo kan gebruiken voor dashboards, grafieken en AI-analyses. De oorspronkelijke rekeningdetails blijven beschikbaar voor correcties of toekomstige extra features, maar de presentatie naar de ondernemer gebeurt op het niveau van begrijpelijke categorieën.
+
+## Datamodel (conceptueel)
+
+De belangrijkste tabellen in Supabase zijn:
+
+Firm: stelt het boekhoudkantoor voor. Bevat velden zoals id, naam, subdomein, contactinfo, brandingconfiguratie (logo, primaire en secundaire kleuren, fonts), en abonnementstype.
+
+FirmUser: gebruikers binnen een kantooromgeving. Bevat referenties naar Supabase Auth, rollen (admin, medewerker), en koppelingen naar één firm.
+
+Client: de eindklant van het kantoor. Bevat firm_id, basisinfo (naam, rechtsvorm, sector), onboardingstatus, verwijzingen naar één of meerdere client_connections, en voorkeuren voor visualisatie.
+
+ExternalConnection: een koppeling op kantoorniveau naar een extern boekhoudplatform. Bevat type platform (bijvoorbeeld “ExactOnline”, “Yuki”, “Silverfin”), tokens, scopes, tenant-id en status. Dit is typisch de OAuth2- of API-key verbinding.
+
+ClientConnection: de koppeling tussen een Saldoo-client en een extern dossier-id in de boekhoudsoftware. Bevat client_id, external_connection_id, external_client_id (of dossier_id), status en metagegevens.
+
+FinancialData: de genormaliseerde cijfers per klant. Per rij wordt opgeslagen: client_id, jaar, periode (indien van toepassing), account_code, account_label, bruto bedrag, category_key (Saldoo-categorie), en type (resultatenrekening of balans). Deze tabel is de basis voor alle dashboards.
+
+AIQuestions: alle vragen die ondernemers aan de AI stellen. Bevat client_id, firm_id, vraagtekst, timestamp, geclassificeerde categorie (zoals “auto”, “kosten”, “btw”, “vennootschap”), en eventueel extra metadata zodat het kantoor later analyses kan maken.
+
+Uploads of Documents: optionele contextbestanden per klant (bijvoorbeeld contracten, businessplan), indien later nog nodig om de AI extra context te geven, maar geen kernvoorwaarde meer voor cijfers.
+
+Alle tabellen worden beschermd met row-level security. `firm_id` en `client_id` zijn cruciaal in elke policy, zodat niemand buiten zijn eigen context kan lezen of schrijven.
+
+## Kantooromgeving en dashboard
+
+De kantooromgeving is de primaire werkplek voor de accountant. Na login op het subdomein van het kantoor krijgt de gebruiker een dashboard te zien met:
+- het aantal actieve klanten,
+- een lijst van recent geraadpleegde of grootste klanten,
+- een overzicht van actieve integraties (welke boekhoudpakketten zijn gekoppeld),
+- en een samenvatting van recente AI-activiteit van klanten.
+
+Vanuit deze omgeving kan de accountant nieuwe klanten aanmaken, de koppeling leggen met een extern dossier, integraties beheren en AI-vragen monitoren. Wanneer een accountant een klant kiest, komt hij terecht in een detailweergave met:
+- de belangrijkste KPI’s van de klant (omzet, resultaat, marge, cashpositie),
+- een snel overzicht van trends per jaar,
+- en een lijst van de vragen die de klant de laatste tijd aan de AI heeft gesteld.
+
+Dit laat kantoren toe om proactief in te spelen op terugkerende thema’s zoals “overschakelen naar vennootschap”, “aankoop van een wagen”, “investeringen”, “btw-voorschotten”, enzovoort.
+
+## Klantenportaal en presentatie van cijfers
+
+Voor de ondernemer is de omgeving bewust veel eenvoudiger. De klant logt in via een link op het subdomein van het kantoor en krijgt een interface te zien die volledig in de branding van zijn accountant staat.
+
+De kernonderdelen van het klantenportaal zijn:
+- een “Mijn cijfers”-pagina met een vereenvoudigde balans en resultatenrekening,
+- grafieken met evoluties per jaar,
+- een korte interpretatie in gewone taal (bijvoorbeeld “je omzet is dit jaar 15% gestegen ten opzichte van vorig jaar”),
+- en een AI-chat waar de klant vragen kan stellen over zijn cijfers.
+
+Technisch komt deze weergave rechtstreeks uit de tabel `financial_data`, waarbij rekeningcodes eerst worden samengevoegd tot leesbare categorieën. De UI laat de ondernemer nooit worstelen met technische rekeningnummers, maar toont logische blokken zoals “omzet”, “bedrijfskosten”, “nettoresultaat”, “investeringen” en “schulden”.
+
+Als de accountant in zijn boekhoudsoftware nieuwe boekingen doet of een boekjaar afsluit, wordt dit via de API-synchronisatie doorgegeven aan Saldoo, zodat de cijfers in het klantenportaal actueel blijven zonder extra handelingen.
+
+## AI-laag en vraagafhandeling
+
+De AI-functionaliteit in Saldoo gebruikt de data van `financial_data` en de basiscontext van de klant om vragen te beantwoorden. De AI kan bijvoorbeeld antwoorden op vragen als:
+- “Waarom is mijn winst lager dan vorig jaar?”
+- “Hoeveel gaf ik dit jaar uit aan auto- en vervoerskosten?”
+- “Is mijn cashpositie gezond?”
+- “Welke kostenpost is het meest gestegen?”
+
+Voor elk AI-antwoord wordt een context opgebouwd die bestaat uit:
+- de relevante cijfers uit de genormaliseerde dataset (per jaar en categorie),
+- basic uitlegteksten over boekhoudkundige begrippen,
+- en eventuele door het kantoor goedgekeurde kennisblokken (bijvoorbeeld generieke uitleg over Belgische btw-tarieven of basisprincipes).
+
+De AI mag geen bindend fiscaal advies geven, maar wel trends duiden, cijfers vergelijken en in klare taal uitleggen wat er te zien is. De prompts moeten nadruk leggen op veiligheid, correctheid en het vermijden van harde aanbevelingen (“doe X” of “doe Y”), tenzij het gaat over puur feitelijke zaken.
+
+Elke vraag die de klant stelt, wordt opgeslagen in `ai_questions` met verwijzing naar client_id en firm_id. De accountant ziet deze vragen in zijn dashboard, maar standaard niet het volledige antwoord. Op die manier behoudt de accountant het overzicht over wat er leeft bij de klant, zonder dat de AI zijn rol overneemt.
+
+## API-laag en synchronisatiemechanisme
+
+De communicatie met externe boekhoudpakketten gebeurt via een abstractielaag die per provider een eigen adapter heeft. Technisch betekent dit dat er per ondersteund pakket een module is die verantwoordelijk is voor:
+
+- het opzetten van de verbinding (OAuth2-flow of API-key registratie),
+- het ophalen van lijsten met dossiers/klanten om te koppelen aan Saldoo-clients,
+- het ophalen van jaarcijfers, resultatenrekeningen, balansen en andere relevante rapporten,
+- het vertalen van de externe datastructuur naar het interne Saldoo-importformaat.
+
+Een typische flow voor een sync-job ziet er als volgt uit:
+1. Saldoo haalt uit `external_connections` alle actieve connecties van een kantoor.
+2. Voor elke client die een `client_connection` heeft, wordt bij de juiste adapter een call gedaan om cijfers op te halen.
+3. De adapter spreekt de specifieke API van het boekhoudpakket aan, verwerkt de response en levert een gestandaardiseerd JSON-object terug.
+4. Dit object wordt weggeschreven in een `raw_imports`-tabel (optioneel, voor audit en debugging).
+5. Vanuit `raw_imports` wordt de data getransformeerd en opgeslagen als genormaliseerde records in `financial_data`.
+6. Derivative data zoals trends, ratio’s en KPI’s kunnen in aparte tabellen of views worden bijgehouden voor snelle queries.
+
+Next.js API-routes dienen als toegangspunt voor deze processen en draaien ofwel triggered door de UI (bijvoorbeeld “sync nu deze klant”) of periodiek via scheduled jobs.
+
+## Whitelabel branding en theming
+
+Omdat Saldoo whitelabel is, moet de UI per kantoor dynamisch van stijl veranderen. De brandingconfiguratie van een firm (logo, kleuren, fonts) wordt in Supabase opgeslagen en door mijn(de eigenaar van saldoo) beheerd. In Next.js worden deze waarden bij het laden van de pagina opgehaald en in CSS-variabelen gegoten. Componenten gebruiken deze variabelen om knoppen, backgrounds en typography aan te passen.
+
+Zo voelt de gehele omgeving voor de ondernemer aan alsof hij in de digitale omgeving van zijn eigen accountant zit, niet in een generieke tool van een derde partij.
+
+## Veiligheid en conformiteit
+
+Veiligheid is essentieel. De belangrijkste principes zijn:
+- RLS in Supabase om ervoor te zorgen dat een gebruiker alleen data ziet van zijn eigen firm en clients.
+- Tokens en API-keys van externe integraties worden versleuteld opgeslagen en nooit naar de frontend gestuurd.
+- AI-calls gebeuren uitsluitend server-side, zodat ruwe data nooit rechtstreeks aan het model via de client worden prijsgegeven.
+- Logging van sync-jobs en fouten, zodat problemen in integraties snel opgespoord kunnen worden.
+
+Daarnaast moet het platform voorbereid zijn op toekomstige uitbreidingen zoals extra autorisatierollen, meer granulariteit in rechten (bijvoorbeeld per medewerker bepaalde klanten afschermen), en dataverwerkersovereenkomsten met kantoren.
+
+## Waardepropositie samengevat
+
+Met directe API-integraties haalt Saldoo de volledige frictie weg van exporten en manuele uploads. Accountants verbinden hun boekhoudsoftware één keer met Saldoo, koppelen hun klanten, en vanaf dan lopen de cijfers automatisch binnen. Ondernemers krijgen een heldere, begrijpelijke omgeving waarin hun cijfers tot leven komen en waarin ze vragen kunnen stellen zonder schroom. Accountants krijgen de tools om sneller, duidelijker en proactiever te werken, zonder meer uren te verliezen aan repetitieve uitleg.
+
+Dit is de kern van Saldoo voor accountants in de context van verplichte API-integraties. Het platform is ontworpen om accountants te versterken, niet te vervangen, en combineert technische robuustheid met een sterke focus op begrijpelijkheid voor de eindgebruiker.

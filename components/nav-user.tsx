@@ -68,7 +68,7 @@ export function NavUser({
         return
       }
       toast.success("Succesvol uitgelogd")
-      router.push("/login")
+      router.push("/accountant/login")
       router.refresh()
     } catch (error) {
       console.error("Logout error:", error)

@@ -1,0 +1,223 @@
+# MAR-rekeningstelsel — Resultatenrekening
+
+## 6 Kosten
+
+### 60 Handelsgoederen, grond- en hulpstoffen (23)
+
+- **600** Aankopen van grondstoffen  
+- **601** Aankopen van hulpstoffen  
+- **602** Aankopen van diensten, werk en studies  
+- **603** Algemene onderaannemingen  
+- **604** Aankopen van handelsgoederen  
+- **605** Aankopen van onroerende goederen bestemd voor verkoop  
+- **608** Ontvangen kortingen, ristorno's en rabatten (–) (24)  
+- **609** Voorraadwijzigingen  
+  - **6090** van grondstoffen  
+  - **6091** van hulpstoffen  
+  - **6094** van handelsgoederen  
+  - **6095** van gekochte onroerende goederen bestemd voor verkoop  
+
+### 61 Diensten en diverse goederen
+
+- **617** Uitzendkrachten en ter beschikking gestelde personen  
+- **618** Bezoldigingen, verzekeringen, pensioenen bestuurders/zaakvoerders/werkende vennoten (niet via arbeidsovereenkomst)  
+
+### 62 Bezoldigingen, sociale lasten en pensioenen
+
+- **620** Bezoldigingen en rechtstreekse sociale voordelen  
+  - **6200** Bestuurders of zaakvoerders (25)  
+  - **6201** Directiepersoneel  
+  - **6202** Bedienden  
+  - **6203** Arbeiders  
+  - **6204** Andere personeelsleden  
+- **621** Werkgeversbijdragen voor sociale verzekeringen  
+- **622** Werkgeverspremies bovenwettelijke verzekeringen  
+- **623** Andere personeelskosten  
+- **624** Ouderdoms- en overlevingspensioenen  
+  - **6240** Bestuurders of zaakvoerders (25)  
+  - **6241** Personeel  
+
+### 63 Afschrijvingen, waardeverminderingen en voorzieningen
+
+- **630** Afschrijvingen en waardeverminderingen op vaste activa — toevoeging  
+  - **6300** Oprichtingskosten  
+  - **6301** Immateriële vaste activa  
+  - **6302** Materiële vaste activa  
+  - **6308** Waardeverminderingen op immateriële vaste activa  
+  - **6309** Waardeverminderingen op materiële vaste activa  
+- **631** Waardeverminderingen op voorraden  
+  - **6310** Toevoeging  
+  - **6311** Terugneming (–)  
+- **632** Waardeverminderingen op bestellingen in uitvoering  
+  - **6320** Toevoeging  
+  - **6321** Terugneming (–)  
+- **633** Waardeverminderingen op handelsvorderingen > 1 jaar  
+  - **6330** Toevoeging  
+  - **6331** Terugneming (–)  
+- **634** Waardeverminderingen op handelsvorderingen ≤ 1 jaar  
+  - **6340** Toevoeging  
+  - **6341** Terugneming (–)  
+- **635** Voorzieningen voor pensioenen en soortgelijke verplichtingen  
+  - **6350** Toevoeging  
+  - **6351** Besteding en terugneming (–)  
+- **636** Voorzieningen voor grote herstellings- en onderhoudswerken  
+  - **6360** Toevoeging  
+  - **6361** Besteding en terugneming (–)  
+- **637** Voorzieningen voor milieuverplichtingen  
+  - **6370** Toevoeging  
+  - **6371** Besteding en terugneming (–)  
+- **638** Voorzieningen voor andere risico's en kosten  
+  - **6380** Toevoeging  
+  - **6381** Besteding en terugneming (–)  
+
+### 64 Andere bedrijfskosten
+
+- **640** Bedrijfsbelastingen  
+- **641** Minderwaarden op de courante realisatie van vaste activa  
+- **642** Minderwaarden op de realisatie van handelsvorderingen  
+- **643–648** Diverse bedrijfskosten  
+- **649** Als herstructureringskosten geactiveerde bedrijfskosten (–)  
+
+### 65 Financiële kosten
+
+- **650** Kosten van schulden  
+  - **6500** Rente, commissies, kosten  
+  - **6501** Afschrijving kosten uitgifte leningen  
+  - **6502** Geactiveerde intercalaire interesten (–)  
+- **651** Waardeverminderingen op vlottende activa  
+  - **6510** Toevoeging  
+  - **6511** Terugneming (–) (26)  
+- **652** Minderwaarden realisatie vlottende activa  
+- **653** Discontokosten  
+- **654** Wisselresultaten (27)  
+- **655** Resultaten uit omrekening vreemde valuta (27)  
+- **656** Voorzieningen met financieel karakter  
+  - **6560** Toevoegingen  
+  - **6561** Bestedingen en terugnemingen (–)  
+- **657–658** Diverse financiële kosten  
+- **659** Herstructureringskosten geactiveerde financiële kosten (–)  
+
+### 66 Niet-recurrente bedrijfs- of financiële kosten
+
+- **660** Niet-recurrente afschrijvingen en waardeverminderingen  
+  - **6600** Oprichtingskosten  
+  - **6601** Immateriële vaste activa  
+  - **6602** Materiële vaste activa  
+- **661** Waardeverminderingen op financiële vaste activa  
+- **662** Voorzieningen niet-recurrente risico's en kosten  
+  - **6620** Bedrijfsrisico's en -kosten  
+    - **66200** Toevoeging  
+    - **66201** Besteding (–)  
+  - **6621** Financiële risico's en -kosten  
+    - **66210** Toevoeging  
+    - **66211** Besteding (–)  
+- **663** Minderwaarden realisatie vaste activa  
+  - **6630** Immateriële en materiële vaste activa  
+  - **6631** Immateriële en materiële vaste activa  
+- **664–667** Andere niet-recurrente bedrijfskosten  
+- **668** Andere niet-recurrente financiële kosten  
+- **6690–6691** Geactiveerde niet-recurrente kosten (–)  
+
+### 67 Belastingen op het resultaat
+
+- **670** Belgische belastingen — huidig boekjaar  
+  - **6700** Verschuldigde belastingen / voorheffingen  
+  - **6701** Geactiveerde overschotten (–)  
+  - **6702** Geraamde belastingen  
+- **671** Belgische belastingen — vorige jaren  
+  - **6710** Verschuldigde supplementen  
+  - **6711** Geraamde supplementen  
+  - **6712** Fiscale voorzieningen  
+- **672** Buitenlandse belastingen — huidig boekjaar  
+- **673** Buitenlandse belastingen — vorige jaren  
+
+### 68 Overboeking naar de uitgestelde belastingen en belastingvrije reserves
+
+- **680** Overboeking naar uitgestelde belastingen  
+- **689** Overboeking naar belastingvrije reserves  
+
+### 69 Resultatenverwerking
+
+- **690** Overgedragen verlies vorig boekjaar  
+- **691** Toevoeging aan de inbreng  
+- **692** Toevoeging aan de reserves  
+  - **6920** Wettelijke reserve  
+  - **6921** Overige reserves  
+- **693** Over te dragen winst  
+- **694** Vergoeding van de inbreng  
+- **695** Bestuurders of zaakvoerders  
+- **696** Werknemers  
+- **697** Andere rechthebbenden  
+
+---
+
+## 7 Opbrengsten
+
+### 70 Omzet
+
+- **700–707** Verkopen en dienstprestaties  
+- **708** Toegekende kortingen, ristorno's, rabatten (–) (28)  
+
+### 71 Wijzigingen in de voorraden en bestellingen in uitvoering
+
+- **712** Voorraad goederen in bewerking  
+- **713** Voorraad gereed product  
+- **715** Voorraad onroerende goederen bestemd voor verkoop  
+- **717** Bestellingen in uitvoering  
+  - **7170** Aanschaffingswaarde  
+  - **7171** Toegerekende winst  
+
+### 72 Geproduceerde vaste activa
+
+### 74 Andere bedrijfsopbrengsten
+
+- **740** Bedrijfssubsidies en compenserende bedragen  
+- **741** Meerwaarden realisatie materiële vaste activa  
+- **742** Meerwaarden realisatie handelsvorderingen  
+- **743–749** Diverse bedrijfsopbrengsten  
+
+### 75 Financiële opbrengsten
+
+- **750** Opbrengsten uit financiële vaste activa  
+- **751** Opbrengsten uit vlottende activa  
+- **752** Meerwaarden realisatie vlottende activa (26)  
+- **753** Kapitaal- en interestsubsidies  
+- **754** Wisselresultaten (27)  
+- **755** Resultaten uit omrekening vreemde valuta (27)  
+- **756–759** Diverse financiële opbrengsten  
+
+### 76 Niet-recurrente bedrijfs- of financiële opbrengsten
+
+- **760** Terugneming afschrijvingen en waardeverminderingen  
+  - **7600** Immateriële vaste activa  
+  - **7601** Materiële vaste activa  
+- **761** Terugneming waardeverminderingen financiële vaste activa  
+- **762** Terugneming voorzieningen niet-recurrente risico's en kosten  
+  - **7620** Bedrijfsrisico's en -kosten  
+  - **7621** Financiële risico's en -kosten  
+- **763** Meerwaarden realisatie vaste activa  
+  - **7630** Immateriële en materiële vaste activa  
+  - **7631** Financiële vaste activa  
+- **764–768** Andere niet-recurrente bedrijfsopbrengsten  
+- **769** Andere niet-recurrente financiële opbrengsten  
+
+### 77 Regularisering belastingen en terugneming fiscale voorzieningen
+
+- **771** Belgische belastingen  
+  - **7710** Regularisering betaalde belastingen  
+  - **7711** Regularisering geraamde belastingen  
+  - **7712** Terugneming fiscale voorzieningen  
+- **773** Buitenlandse belastingen  
+
+### 78 Onttrekkingen aan belastingvrije reserves en uitgestelde belastingen
+
+- **780** Onttrekkingen aan uitgestelde belastingen  
+- **789** Onttrekkingen aan belastingvrije reserves  
+
+### 79 Resultaatverwerking
+
+- **790** Overgedragen winst vorig boekjaar  
+- **791** Onttrekking aan de inbreng  
+- **792** Onttrekking aan de reserves  
+- **793** Over te dragen verlies  
+- **794** Tussenkomst van vennoten/eigenaar in het verlies  

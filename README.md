@@ -2,7 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+1. Node.js installed
+2. Supabase project set up
+3. Environment variables configured (see [Development Setup](./DEVELOPMENT.md))
+
+### Running the Development Server
 
 ```bash
 npm run dev
@@ -17,6 +23,10 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+### Development Setup
+
+For detailed setup instructions, including Supabase configuration for localhost authentication, see [DEVELOPMENT.md](./DEVELOPMENT.md).
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

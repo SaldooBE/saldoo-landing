@@ -13,8 +13,8 @@ export function MobileUploadPreview() {
         {/* Header with Logo */}
         <div className="border-b border-gray-200 bg-white px-4 py-3 flex items-center justify-between">
           <Image
-            src="/logo-blauw.svg"
-            alt="Saldoo Logo"
+            src="/Vancoile_demo.png"
+            alt="Vancoile Logo"
             width={100}
             height={32}
             className="h-6 w-auto"

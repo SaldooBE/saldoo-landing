@@ -53,8 +53,8 @@ export function FAQPreview() {
           {/* Logo */}
           <div className="border-b border-gray-200 p-4">
             <Image
-              src="/Vancoile_demo.png"
-              alt="Vancoile Logo"
+              src="/logo-blauw.svg"
+              alt="Saldoo Logo"
               width={120}
               height={40}
               className="h-8 w-auto"

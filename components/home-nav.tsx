@@ -19,8 +19,8 @@ export function HomeNav({ currentSection, onFeaturesClick, onHeroClick }: HomeNa
           {onHeroClick ? (
             <button onClick={onHeroClick} className="cursor-pointer">
               <Image
-                src="/logo-blauw.svg"
-                alt="Saldoo Logo"
+                src="/Umain-logo.svg"
+                alt="Umain Logo"
                 width={120}
                 height={36}
                 className="h-10 w-auto"
@@ -30,8 +30,8 @@ export function HomeNav({ currentSection, onFeaturesClick, onHeroClick }: HomeNa
           ) : (
             <Link href="/">
               <Image
-                src="/logo-blauw.svg"
-                alt="Saldoo Logo"
+                src="/Umain-logo.svg"
+                alt="Umain Logo"
                 width={120}
                 height={36}
                 className="h-10 w-auto"

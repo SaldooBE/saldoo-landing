@@ -187,8 +187,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-2">
           <Image
-            src="/logo-blauw.svg"
-            alt="Saldoo Logo"
+            src="/Umain-logo.svg"
+            alt="Umain Logo"
             width={140}
             height={50}
             className="h-10 w-auto"
